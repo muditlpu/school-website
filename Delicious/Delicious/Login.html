@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Document</title>
+</head>
+<style>
+body {
+  background-color: #f5f5f5;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+#admin-login {
+  width: 300px; 
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #4CAF50;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #4CAF50;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #4CAF50;
+}
+
+input {
+  width: 100%; 
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #4CAF50;
+  border-radius: 4px;
+  box-sizing: border-box; 
+}
+input:focus {
+  outline: none;
+  border-color: #45a049;
+}
+
+button {
+  width: 100%; 
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+input[type="password"], input[type="text"] {
+  width: 100%;
+  padding-right: 40px; 
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  font-size: 1.2em;
+  color: #4CAF50;
+  margin-top: -6px;
+}
+
+
+button:hover {
+  background-color: #45a049;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: -8px;
+  margin-bottom: 10px;
+  display: none;
+  text-align: left; 
+}
+
+</style>
+<body>
+<!-- Admin Login Page -->
+<section id="admin-login" class="section">
+    <div class="container">
+      <h2>Admin Login</h2>
+      <form id="login-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <p id="username-error" class="error-message">Username is incorrect.</p>
+        
+        <label for="password">Password:</label>
+        <div class="password-wrapper">
+          <input type="password" id="password" name="password" required>
+          <span id="toggle-password" class="toggle-password">
+            <i class="fas fa-eye"></i>
+          </span>
+        </div>
+        <p id="password-error" class="error-message">Password is incorrect.</p>
+        
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </section>
+  
+  
+
+  <script>
+ const passwordInput = document.getElementById('password');
+const togglePassword = document.getElementById('toggle-password');
+const usernameInput = document.getElementById('username');
+const usernameError = document.getElementById('username-error');
+const passwordError = document.getElementById('password-error');
+
+togglePassword.addEventListener('click', function () {
+  const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+  passwordInput.setAttribute('type', type);
+
+  this.querySelector('i').classList.toggle('fa-eye');
+  this.querySelector('i').classList.toggle('fa-eye-slash');
+});
+
+document.getElementById('login-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const username = usernameInput.value;
+  const password = passwordInput.value;
+
+  usernameError.style.display = 'none';
+  passwordError.style.display = 'none';
+
+  const validUsername = 'admin';
+  const validPassword = 'yourpassword';
+
+  let isValid = true;
+
+  if (username !== validUsername) {
+    usernameError.style.display = 'block';
+    usernameError.textContent = 'Username is incorrect.';
+    isValid = false;
+  }
+
+  if (password !== validPassword) {
+    passwordError.style.display = 'block';
+    passwordError.textContent = 'Password is incorrect.';
+    isValid = false;
+  }
+
+  if (isValid) {
+    window.location.href = 'edit-newsletter.html';
+  }
+});
+
+
+
+  </script>
+</body>
+</html>
