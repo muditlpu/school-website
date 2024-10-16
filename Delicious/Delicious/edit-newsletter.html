@@ -1,11 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Newsletter</title>
 </head>
 <body>
- <h1>sucessful</h1>   
+  <h2>Edit Newsletter</h2>
+  <form id="newsletter-form">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+
+    <label for="image-url">Image URL:</label>
+    <input type="text" id="image-url" name="image-url" required>
+
+    <label for="video-url">Video URL:</label>
+    <input type="text" id="video-url" name="video-url">
+
+    <button type="submit">Save</button>
+  </form>
+
+  <script>
+    // Load existing content from local storage when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      const title = localStorage.getItem('newsletterTitle') || '';
+      const description = localStorage.getItem('newsletterDescription') || '';
+      const imageUrl = localStorage.getItem('newsletterImageUrl') || '';
+      const videoUrl = localStorage.getItem('newsletterVideoUrl') || '';
+
+      document.getElementById('title').value = title;
+      document.getElementById('description').value = description;
+      document.getElementById('image-url').value = imageUrl;
+      document.getElementById('video-url').value = videoUrl;
+    });
+
+    // Save form data to local storage
+    document.getElementById('newsletter-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      localStorage.setItem('newsletterTitle', document.getElementById('title').value);
+      localStorage.setItem('newsletterDescription', document.getElementById('description').value);
+      localStorage.setItem('newsletterImageUrl', document.getElementById('image-url').value);
+      localStorage.setItem('newsletterVideoUrl', document.getElementById('video-url').value);
+
+      alert('Newsletter updated successfully!');
+    });
+  </script>
 </body>
 </html>
