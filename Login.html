@@ -1,41 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>Document</title>
-</head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>JULI-TOLA INTERNATIONAL SCHOOL</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Satisfy:wght@400&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
 <style>
-body {
-  background-color: #f5f5f5;
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
+ 
+
 
 #admin-login {
-  width: 300px; 
-  background-color: white;
+  width: 100%; 
   padding: 20px;
-  border-radius: 8px;
-  border: 1px solid #4CAF50;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-  color: #4CAF50;
+  color: #ffffffef;
   text-align: center;
   margin-bottom: 20px;
+  
+  
+}
+
+@media (min-width: 1024px) {
+    .hero h2, .hero p {
+        max-width: 100%;
+    }
 }
 
 label {
   display: block;
   margin-bottom: 5px;
-  color: #4CAF50;
+  color: #fff;
+  font-size: 1.1em;
+  text-align: start;
 }
 
 input {
@@ -51,15 +70,18 @@ input:focus {
   border-color: #45a049;
 }
 
-button {
+.btn-primary {
   width: 100%; 
   padding: 10px;
-  background-color: #4CAF50;
+  background-color: #106312;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
+
+
+
 .password-wrapper {
   position: relative;
   display: flex;
@@ -81,94 +103,186 @@ input[type="password"], input[type="text"] {
 }
 
 
-button:hover {
+.btn-primary:hover {
   background-color: #45a049;
 }
 
 .error-message {
-  color: red;
-  font-size: 0.9em;
-  margin-top: -8px;
+  color: rgb(255, 45, 45);
+  font-size: 1em;
+  font-weight: 600;
+  margin-top: -6px;
   margin-bottom: 10px;
   display: none;
   text-align: left; 
 }
 
+
 </style>
-<body>
-<!-- Admin Login Page -->
-<section id="admin-login" class="section">
-    <div class="container">
-      <h2>Admin Login</h2>
-      <form id="login-form">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <p id="username-error" class="error-message">Username is incorrect.</p>
-        
-        <label for="password">Password:</label>
-        <div class="password-wrapper">
-          <input type="password" id="password" name="password" required>
-          <span id="toggle-password" class="toggle-password">
-            <i class="fas fa-eye"></i>
-          </span>
-        </div>
-        <p id="password-error" class="error-message">Password is incorrect.</p>
-        
-        <button type="submit">Login</button>
-      </form>
+ 
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header fixed-top">
+
+
+    <div class="branding d-flex align-items-cente">
+
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a href="index.html" class="logo d-flex align-items-center">
+          <!-- Uncomment the line below if you also wish to use an image logo -->
+          <!-- <img src="assets/img/logo.png" alt=""> -->
+          <h1 class="sitename" style="color: red;"><span style="color: green;">Juli</span>tola</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="index.html#hero" class="active">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#why">Acedemics</a></li>
+            <li><a href="index.html#specials">Activities</a></li>
+            <li><a href="index.html#events">News</a></li>
+            <li><a href="index.html#gallery">Gallery</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="Login.html">Login</a></li>
+
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+      </div>
+
     </div>
-  </section>
+
+  </header>
+  <main >
+     <!-- Hero Section -->
+     <section id="hero" class="hero section dark-background">
+
+      <div id="hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+
+      
+
+        
+        <div class="carousel-item active">
+          <img src="https://img.freepik.com/free-photo/empty-blackboard_53876-138475.jpg?t=st=1729193203~exp=1729196803~hmac=dcac9efcb657298410671920e33917f083a36924176f2e40139515581c0c9557&w=826" alt="">
+          <div class="carousel-container">
+             <!-- Admin Login Page -->
+    <section id="admin-login" class="section">
+      <div class="container text-center" style="max-width: 400px;">
+        <h2>Admin Login</h2>
+        <form id="login-form">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required class="form-control mb-3">
+          <p id="username-error" class="error-message text-danger">Username is incorrect.</p>
+          
+          <label for="password">Password:</label>
+          <div class="password-wrapper mb-3">
+            <input type="password" id="password" name="password" required class="form-control">
+          
+          </div>
+          <p id="password-error" class="error-message text-danger">Password is incorrect.</p>
+          
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+      </div>
+    </section>
+          </div>
+        </div><!-- End Carousel Item -->
+
+   
+
+
+      
+
+      </div>
+
+    </section><!-- /Hero Section -->
   
+  </main>
   
 
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+ 
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script>
- const passwordInput = document.getElementById('password');
-const togglePassword = document.getElementById('toggle-password');
-const usernameInput = document.getElementById('username');
-const usernameError = document.getElementById('username-error');
-const passwordError = document.getElementById('password-error');
-
-togglePassword.addEventListener('click', function () {
-  const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-  passwordInput.setAttribute('type', type);
-
-  this.querySelector('i').classList.toggle('fa-eye');
-  this.querySelector('i').classList.toggle('fa-eye-slash');
-});
-
-document.getElementById('login-form').addEventListener('submit', function(event) {
-  event.preventDefault();
-
-  const username = usernameInput.value;
-  const password = passwordInput.value;
-
-  usernameError.style.display = 'none';
-  passwordError.style.display = 'none';
-
-  const validUsername = 'admin';
-  const validPassword = 'yourpassword';
-
-  let isValid = true;
-
-  if (username !== validUsername) {
-    usernameError.style.display = 'block';
-    usernameError.textContent = 'Username is incorrect.';
-    isValid = false;
-  }
-
-  if (password !== validPassword) {
-    passwordError.style.display = 'block';
-    passwordError.textContent = 'Password is incorrect.';
-    isValid = false;
-  }
-
-  if (isValid) {
-    window.location.href = 'edit-newsletter.html';
-  }
-});
-
-
-
+    const loginForm = document.getElementById('login-form');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const usernameError = document.getElementById('username-error');
+    const passwordError = document.getElementById('password-error');
+    
+    // Ensure errors are hidden initially
+    usernameError.style.display = 'none';
+    passwordError.style.display = 'none';
+  
+    // Event listener for form submission
+    loginForm.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevents page reload
+  
+      // Reset error visibility
+      usernameError.style.display = 'none';
+      passwordError.style.display = 'none';
+  
+      // Validate credentials
+      const validUsername = 'admin';
+      const validPassword = 'yourpassword';
+      const username = usernameInput.value;
+      const password = passwordInput.value;
+  
+      let isValid = true;
+  
+      if (username !== validUsername) {
+        usernameError.style.display = 'block';
+        isValid = false;
+      }
+  
+      if (password !== validPassword) {
+        passwordError.style.display = 'block';
+        isValid = false;
+      }
+  
+      // Redirect if valid
+      if (isValid) {
+        window.location.href = 'edit-newsletter.html';
+      }
+    });
   </script>
+  
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyDKHZ1viqinUqJcs4He9QGnq2Ld82jSt-M",
+      authDomain: "juli-tola.firebaseapp.com",
+      projectId: "juli-tola",
+      storageBucket: "juli-tola.appspot.com",
+      messagingSenderId: "452807393853",
+      appId: "1:452807393853:web:2c58c3ca257ea605f6e054",
+      measurementId: "G-FVNPXHKQLJ"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
 </body>
+
 </html>

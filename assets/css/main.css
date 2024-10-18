@@ -975,6 +975,10 @@ section,
   font-size: 1.25rem;
 }
 
+.about .content p{
+  line-height: 2.2;
+}
+
 .about .content p:last-child {
   margin-bottom: 0;
 }
@@ -1184,9 +1188,13 @@ section,
   }
 
   .specials .nav-link.active {
-    color: var(--accent-color);
+    color: var(--background-color);
     background: var(--accent-color);
   }
+}
+
+#loom-companion-mv3{
+  display: none;
 }
 
 /*--------------------------------------------------------------

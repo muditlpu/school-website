@@ -49,10 +49,12 @@
             <li><a href="#hero" class="active">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#why">Acedemics</a></li>
-            <li><a href="#events">Activities</a></li>
-            <li><a href="#news">News</a></li>
-
+            <li><a href="#specials">Activities</a></li>
+            <li><a href="#events">News</a></li>
+            <li><a href="#gallery">Gallery</a></li>
             <li><a href="#contact">Contact</a></li>
+            <li><a href="Login.html">Login</a></li>
+
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -81,8 +83,8 @@
   At our school, we believe that early education is the cornerstone of lifelong learning and success. Our dedicated and nurturing environment is designed to spark curiosity, build confidence, and foster a love for learning in every child. Join us as we lay the foundation for a brighter, more promising future where children are empowered to dream big and reach their fullest potential.
 </p>
             <div>
-              <a href="#menu" class="btn-get-started">About Us</a>
-              <a href="#news" class="btn-get-started">News Updates</a>
+              <a href="#about" class="btn-get-started">About Us</a>
+              <a href="#events" class="btn-get-started">News Updates</a>
             </div>
           </div>
         </div><!-- End Carousel Item -->
@@ -95,8 +97,8 @@
   We are committed to nurturing the hearts and minds of our young learners. Our creche and primary school provide a warm, supportive environment where children can explore, grow, and thrive. Through engaging activities and a passion for education, we empower each child to build a strong foundation for future success and lifelong learning.
 </p>
         <div>
-              <a href="#menu" class="btn-get-started">About Us</a>
-              <a href="#news" class="btn-get-started">News Updates</a>
+              <a href="#about" class="btn-get-started">About Us</a>
+              <a href="#events" class="btn-get-started">News Updates</a>
             </div>
           </div>
         </div><!-- End Carousel Item -->
@@ -126,7 +128,7 @@
           </div>
           <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="200">
             <h3>A Commitment to Excellence</h3>
-            <p class="fst-italic">
+            <p>
               At Julitola International School, our mission is to provide every student with a comprehensive and well-rounded curriculum. Our goal is to offer enriching and engaging activities that prepare them for a fulfilling and vibrant social and cultural life ahead.            </p>
          <!--  <ul>
               <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
@@ -144,7 +146,7 @@
     </section><!-- /About Section -->
 
     <!-- Why Us Section -->
-    <section id="why-us" class="why-us section">
+    <section id="why" class="why-us section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
@@ -338,90 +340,86 @@
     </section><!-- /Events Section -->
 
   
-    <!-- Gallery Section -->
-    <section id="gallery" class="gallery section">
+   <!-- Gallery Section -->
+<section id="gallery" class="gallery section">
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Gallery</h2>
+    <div><span>Some photos from</span> <span class="description-title">Our Activities</span></div>
+  </div><!-- End Section Title -->
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Gallery</h2>
-        <div><span>Some photos from</span> <span class="description-title">Our Activities</span></div>
-      </div><!-- End Section Title -->
+  <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+    <div class="row g-0" id="gallery-preview">
+      <!-- Firebase-rendered gallery items will go here -->
+    </div>
+  </div>
+</section><!-- /Gallery Section -->
 
-      <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+<script type="module">
+  // Import Firebase SDK modules
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
+  import { getFirestore, collection, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-        <div class="row g-0">
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDKHZ1viqinUqJcs4He9QGnq2Ld82jSt-M",
+    authDomain: "juli-tola.firebaseapp.com",
+    projectId: "juli-tola",
+    storageBucket: "juli-tola.appspot.com",
+    messagingSenderId: "452807393853",
+    appId: "1:452807393853:web:2c58c3ca257ea605f6e054",
+    measurementId: "G-FVNPXHKQLJ"
+  };
 
-         
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app);
+  const db = getFirestore(app);
+  const galleryRef = collection(db, 'gallery');
 
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
-              <a href="https://julitolaschools.com.ng/wp-content/uploads/2023/09/art-and-dance-at-julitola-schools.jpg" class="glightbox" data-gallery="images-gallery">
-                <img src="https://julitolaschools.com.ng/wp-content/uploads/2023/09/art-and-dance-at-julitola-schools.jpg" alt="" class="img-fluid">
-              </a>
-            </div>
-          </div><!-- End Gallery Item -->
+  // Function to display messages
+  function displayMessage(message, isError = false) {
+    const messageDiv = document.getElementById('message');
+    messageDiv.textContent = message;
+    messageDiv.style.color = isError ? 'red' : 'green';
+    setTimeout(() => messageDiv.textContent = '', 3000);
+  }
 
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
-              <a href="https://julitolaschools.com.ng/wp-content/uploads/2023/09/Julitola-Arts.jpg" class="glightbox" data-gallery="images-gallery">
-                <img src="https://julitolaschools.com.ng/wp-content/uploads/2023/09/Julitola-Arts.jpg" alt="" class="img-fluid">
-              </a>
-            </div>
-          </div><!-- End Gallery Item -->
+  // Function to load gallery images from Firestore
+  async function loadGallery() {
+    const galleryContainer = document.getElementById('gallery-preview');
+    galleryContainer.innerHTML = ''; // Clear the gallery container
+    try {
+      const querySnapshot = await getDocs(galleryRef);
+      querySnapshot.forEach((doc) => {
+        const imageData = doc.data();
+        const galleryItem = document.createElement('div');
+        galleryItem.classList.add('col-lg-4', 'col-md-4'); // Maintain the column layout
 
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
-              <a href="https://julitolaschools.com.ng/wp-content/uploads/2023/09/Julitola-schools-lab1.jpeg" class="glightbox" data-gallery="images-gallery">
-                <img src="https://julitolaschools.com.ng/wp-content/uploads/2023/09/Julitola-schools-lab1.jpeg" alt="" class="img-fluid">
-              </a>
-            </div>
+        galleryItem.innerHTML = `
+          <div class="gallery-item">
+            <a href="${imageData.url}" class="glightbox" data-gallery="images-gallery">
+              <img src="${imageData.url}" alt="Gallery Image" class="img-fluid">
+            </a>
           </div>
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
-              <a href="https://julitolaschools.com.ng/wp-content/uploads/2023/09/Game-at-JTIS.jpeg" class="glightbox" data-gallery="images-gallery">
-                <img src="https://julitolaschools.com.ng/wp-content/uploads/2023/09/Game-at-JTIS.jpeg" alt="" class="img-fluid">
-              </a>
-            </div>
-          </div><!-- End Gallery Item -->
-          <!--
+        `;
+        galleryContainer.appendChild(galleryItem);
+      });
+      // Reinitialize GLightbox after dynamic content is loaded
+    const lightbox = GLightbox({
+      selector: '.glightbox'
+    });
+    } catch (error) {
+      console.error('Error loading gallery:', error);
+      displayMessage('Error loading gallery', true);
+    }
+  }
 
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
-              <a href="assets/img/gallery/gallery-5.jpg" class="glightbox" data-gallery="images-gallery">
-                <img src="assets/img/gallery/gallery-5.jpg" alt="" class="img-fluid">
-              </a>
-            </div>
-          </div> 
+  // Load gallery on page load
+  window.onload = loadGallery;
+</script>
 
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
-              <a href="assets/img/gallery/gallery-6.jpg" class="glightbox" data-gallery="images-gallery">
-                <img src="assets/img/gallery/gallery-6.jpg" alt="" class="img-fluid">
-              </a>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
-              <a href="assets/img/gallery/gallery-7.jpg" class="glightbox" data-gallery="images-gallery">
-                <img src="assets/img/gallery/gallery-7.jpg" alt="" class="img-fluid">
-              </a>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
-              <a href="assets/img/gallery/gallery-8.jpg" class="glightbox" data-gallery="images-gallery">
-                <img src="assets/img/gallery/gallery-8.jpg" alt="" class="img-fluid">
-              </a>
-            </div>
-          </div> End Gallery Item -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Gallery Section -->
 
     <!-- Chefs Section -->
     <section id="chefs" class="chefs section">
@@ -602,6 +600,8 @@
       </div>
 
     </section><!-- /Testimonials Section -->
+
+    
  <!-- 
  <section id="news" class="about section light-background">
 
