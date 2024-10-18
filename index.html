@@ -378,7 +378,6 @@
   const db = getFirestore(app);
   const galleryRef = collection(db, 'gallery');
 
-  // Function to display messages
   function displayMessage(message, isError = false) {
     const messageDiv = document.getElementById('message');
     messageDiv.textContent = message;
@@ -386,16 +385,15 @@
     setTimeout(() => messageDiv.textContent = '', 3000);
   }
 
-  // Function to load gallery images from Firestore
   async function loadGallery() {
     const galleryContainer = document.getElementById('gallery-preview');
-    galleryContainer.innerHTML = ''; // Clear the gallery container
+    galleryContainer.innerHTML = ''; 
     try {
       const querySnapshot = await getDocs(galleryRef);
       querySnapshot.forEach((doc) => {
         const imageData = doc.data();
         const galleryItem = document.createElement('div');
-        galleryItem.classList.add('col-lg-4', 'col-md-4'); // Maintain the column layout
+        galleryItem.classList.add('col-lg-4', 'col-md-4'); 
 
         galleryItem.innerHTML = `
           <div class="gallery-item">
@@ -406,7 +404,6 @@
         `;
         galleryContainer.appendChild(galleryItem);
       });
-      // Reinitialize GLightbox after dynamic content is loaded
     const lightbox = GLightbox({
       selector: '.glightbox'
     });
@@ -416,7 +413,6 @@
     }
   }
 
-  // Load gallery on page load
   window.onload = loadGallery;
 </script>
 
@@ -436,10 +432,10 @@
 
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
             <div class="member">
-              <div class="pic"><img src="assets/img/chefs/chefs-1.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="https://edugist.org/wp-content/uploads/2024/03/IMG-20240311-WA0010.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>Walter White</h4>
-                <span>Master Chef</span>
+                <h4>Chinwe Nwosu</h4>
+                <span>English Language Teacher</span>
                 <div class="social">
                   <a href=""><i class="bi bi-twitter-x"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
@@ -452,10 +448,11 @@
 
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="member">
-              <div class="pic"><img src="assets/img/chefs/chefs-2.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="https://jacksoncenter.info/wp-content/uploads/2020/03/Screen-Shot-2020-03-11-at-3.02.26-PM.png" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>Sarah Jhonson</h4>
-                <span>Patissier</span>
+                
+<h4>Fatima Abdullahi</h4>
+<span>Social Studies Teacher</span>
                 <div class="social">
                   <a href=""><i class="bi bi-twitter-x"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
@@ -468,10 +465,10 @@
 
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
             <div class="member">
-              <div class="pic"><img src="assets/img/chefs/chefs-3.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="https://b2140504.smushcdn.com/2140504/wp-content/uploads/2023/03/David-McGuire-1-696x724.jpg?lossy=1&strip=1&webp=1" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>William Anderson</h4>
-                <span>Cook</span>
+                <h4>Emeka Okeke</h4>
+<span>ICT Coordinator</span>
                 <div class="social">
                   <a href=""><i class="bi bi-twitter-x"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
@@ -485,7 +482,13 @@
         </div>
 
       </div>
-
+      <style>
+        .member .pic img {
+          height: 400px; 
+          object-fit: cover;
+          width: 100%; 
+        }
+        </style>
     </section><!-- /Chefs Section -->
 
     <!-- Testimonials Section -->
