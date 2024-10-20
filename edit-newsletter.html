@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Gallery</title>
+  <title>Edit Gallery & Newsletter</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
+  
   <style>
     body {
       padding: 20px;
@@ -71,9 +71,32 @@
     .back-to-site a:hover {
       text-decoration: underline;
     }
+
+    #highlights ul {
+      padding-left: 20px;
+    }
+    #highlights ul li {
+      list-style-type: disc;
+    }
+    .newsletter-card {
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      background-color: #f9f9f9;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .newsletter-card h5 {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    .newsletter-card p, .newsletter-card ul {
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
+
 <!-- Tab navigation for Gallery and Newsletter Editors -->
 <ul class="nav nav-tabs" id="editorTab" role="tablist">
   <li class="nav-item" role="presentation">
@@ -115,49 +138,55 @@
   <div class="tab-pane fade" id="newsletter-editor" role="tabpanel" aria-labelledby="newsletter-tab">
     <div class="container mt-4">
       <h2 class="text-success">Edit Newsletter</h2>
-      <!-- Newsletter editor content can go here -->
       <form id="newsletter-form" class="mb-4">
-        <div class="mb-3">
-          <label for="news-title" class="form-label">News Title:</label>
-          <input type="text" id="news-title" class="form-control" placeholder="Enter News Title" required>
-        </div>
-        
-        <div class="mb-3">
-          <label for="news-content" class="form-label">Content:</label>
-          <textarea id="news-content" class="form-control" rows="4" placeholder="Enter News Content" required></textarea>
-        </div>
-          <!-- Add bullet points (optional) -->
-      <div class="mb-3">
-        <label for="bullet-points" class="form-label">Key Highlights:</label>
-        <div id="bullet-points-container">
-          <div class="input-group mb-2">
-            <input type="text" class="form-control bullet-point" placeholder="Highlight 1">
-            <button type="button" class="btn btn-danger remove-bullet-point">Remove</button>
-          </div>
-        </div>
-        <button type="button" id="add-bullet-point" class="btn btn-success mt-2">Add Highlight</button>
-      </div> 
+        <!-- Newsletter Title -->
+    <div class="mb-3">
+      <label for="newsletterTitle" class="form-label">Newsletter Title:</label>
+      <input type="text" id="newsletterTitle" class="form-control" placeholder="Enter the title here">
+    </div>
+
+    <!-- Newsletter Description -->
+    <div class="mb-3">
+      <label for="newsletterDescription" class="form-label">Newsletter Description:</label>
+      <textarea id="newsletterDescription" class="form-control" rows="3" placeholder="Enter newsletter description here"></textarea>
+    </div>
+
+    <!-- Highlights -->
+    <div id="highlights" class="mb-3">
+      <label for="highlightInput" class="form-label">Highlights:</label>
+      <ul id="highlightList"></ul>
+      <div class="input-group">
+        <input type="text" id="highlightInput" class="form-control" placeholder="Add a highlight">
+        <button class="btn btn-primary" type="button" id="addHighlightBtn">Add</button>
+      </div>
+    </div>
+
+    <!-- Additional Info -->
+    <div class="mb-3">
+      <label for="additionalInfo" class="form-label">Additional Info:</label>
+      <textarea id="additionalInfo" class="form-control" rows="3" placeholder="Enter additional details "></textarea>
+    </div>
+
+    <!-- Image/Video Upload -->
+    <div class="mb-3">
+      <label for="newsletterMedia" class="form-label">Upload Image or Video:</label>
+      <input type="file" id="newsletterMedia" class="form-control" accept="image/*, video/*">
+    </div>
+
+    <!-- Video Thumbnail -->
+    <div id="thumbnailInputContainer" style="display: none;">
+      <label for="videoThumbnail">Upload Thumbnail for Video:</label>
+      <input type="file" id="videoThumbnail" class="form-control mb-4 " accept="image/*">
+    </div>
     
-        <div class="mb-3">
-          <label for="news-image" class="form-label">Upload Image (for image-based news):</label>
-          <input type="file" id="news-image" class="form-control" accept="image/*">
-        </div>
-    
-        <div class="mb-3">
-          <label for="news-video" class="form-label">Upload Video:</label>
-          <input type="file" id="news-video" class="form-control" accept="video/*">
-        </div>
-        
-        <div class="mb-3" id="thumbnail-section" style="display: none;">
-          <label for="news-thumbnail" class="form-label">Video Thumbnail (optional for video):</label>
-          <input type="file" id="news-thumbnail" class="form-control" accept="image/*">
-        </div>
-    
-        <button type="submit" class="btn btn-success">Add to Newsletter</button>
+    <button class="btn btn-success" type="submit" id="updateNewsletterBtn">Update Newsletter</button>
       </form>
-       <!-- Newsletter Preview for Admin -->
-  <h3 class="text-success">Current News Items</h3>
-  <div id="news-preview" class="swiper-wrapper"></div>
+      
+      <!-- Newsletter Preview for Admin -->
+      <h3 class="text-success mb-3">Current News Items</h3>
+      <div id="currentNewsletters" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+
+      </div>
     </div>
   </div>
 </div>
@@ -169,186 +198,264 @@
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-
 <script type="module">
-  // Import Firebase SDK modules
+  // Import Firebase modules
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
   import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
   import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
   // Firebase configuration
   const firebaseConfig = {
-      apiKey: "AIzaSyDKHZ1viqinUqJcs4He9QGnq2Ld82jSt-M",
-      authDomain: "juli-tola.firebaseapp.com",
-      projectId: "juli-tola",
-      storageBucket: "juli-tola.appspot.com",
-      messagingSenderId: "452807393853",
-      appId: "1:452807393853:web:2c58c3ca257ea605f6e054",
-      measurementId: "G-FVNPXHKQLJ"
+    apiKey: "AIzaSyDKHZ1viqinUqJcs4He9QGnq2Ld82jSt-M",
+    authDomain: "juli-tola.firebaseapp.com",
+    projectId: "juli-tola",
+    storageBucket: "juli-tola.appspot.com",
+    messagingSenderId: "452807393853",
+    appId: "1:452807393853:web:2c58c3ca257ea605f6e054",
+    measurementId: "G-FVNPXHKQLJ"
   };
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
   const db = getFirestore(app);
+  
+  // Firestore references
   const galleryRef = collection(db, 'gallery');
   const newsletterRef = collection(db, 'newsletters');
 
-  // Tab functionality
-  const galleryTab = document.getElementById('gallery-tab');
-  const newsletterTab = document.getElementById('newsletter-tab');
-  const galleryContent = document.getElementById('gallery-content');
-  const newsletterContent = document.getElementById('newsletter-content');
-
-  galleryTab.addEventListener('click', () => {
-      galleryTab.classList.add('active');
-      newsletterTab.classList.remove('active');
-      galleryContent.classList.add('active');
-      newsletterContent.classList.remove('active');
-  });
-
-  newsletterTab.addEventListener('click', () => {
-      newsletterTab.classList.add('active');
-      galleryTab.classList.remove('active');
-      newsletterContent.classList.add('active');
-      galleryContent.classList.remove('active');
-  });
-
-  // Function to display messages
+  // Display messages
   function displayMessage(message, isError = false) {
-      const messageDiv = document.getElementById('message');
-      messageDiv.textContent = message;
-      messageDiv.style.color = isError ? 'red' : 'green';
-      setTimeout(() => messageDiv.textContent = '', 3000);
+    const messageDiv = document.getElementById('message');
+    messageDiv.textContent = message;
+    messageDiv.style.color = isError ? 'red' : 'green';
+    setTimeout(() => messageDiv.textContent = '', 3000);
   }
 
-  // Function to load gallery images from Firestore
-  async function loadGallery() {
-      const galleryContainer = document.getElementById('gallery-preview');
-      galleryContainer.innerHTML = ''; // Clear the gallery container
-      try {
-          const querySnapshot = await getDocs(galleryRef);
-          querySnapshot.forEach((doc) => {
-              const imageData = doc.data();
-              const imageElement = document.createElement('div');
-              imageElement.classList.add('gallery-item');
-              imageElement.innerHTML = `
-                  <img src="${imageData.url}" alt="Gallery Image">
-                  <button data-id="${doc.id}" class="delete-button">Delete</button>
-              `;
-              galleryContainer.appendChild(imageElement);
-          });
-
-          // Add delete functionality to delete buttons
-          const deleteButtons = document.querySelectorAll('.delete-button');
-          deleteButtons.forEach(button => {
-              button.addEventListener('click', async (event) => {
-                  const docId = event.target.getAttribute('data-id');
-                  await deleteDoc(doc(db, 'gallery', docId));
-                  displayMessage('Image deleted successfully!');
-                  loadGallery(); // Reload gallery after deletion
-              });
-          });
-      } catch (error) {
-          console.error('Error loading gallery:', error);
-          displayMessage('Error loading gallery', true);
-      }
-  }
+  // ----------------------------------------------
+  // Gallery Functions
+  // ----------------------------------------------
 
   // Load gallery on page load
-  window.onload = loadGallery;
+  async function loadGallery() {
+    const galleryContainer = document.getElementById('gallery-preview');
+    galleryContainer.innerHTML = ''; 
+    try {
+      const querySnapshot = await getDocs(galleryRef);
+      querySnapshot.forEach((doc) => {
+        const imageData = doc.data();
+        const imageElement = document.createElement('div');
+        imageElement.classList.add('gallery-item');
+        imageElement.innerHTML = `
+          <img src="${imageData.url}" alt="Gallery Image">
+          <button data-id="${doc.id}" class="delete-button">Delete</button>
+        `;
+        galleryContainer.appendChild(imageElement);
+      });
+    } catch (error) {
+      console.error("Error loading gallery: ", error);
+    }
+  }
 
-  // Handle form submission for adding images
+  // Add to Gallery
   document.getElementById('gallery-form').addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const fileInput = document.getElementById('gallery-upload');
-      const imageUrlInput = document.getElementById('image-url');
+    event.preventDefault();
+    const fileInput = document.getElementById('gallery-upload');
+    const urlInput = document.getElementById('image-url');
+
+    if (fileInput.files.length > 0) {
       const file = fileInput.files[0];
-      const imageUrl = imageUrlInput.value.trim();
-
-      if (file) {
-          // Upload file to Firebase Storage
-          const storageRef = ref(storage, 'gallery/' + file.name);
-          try {
-              const snapshot = await uploadBytes(storageRef, file);
-              const url = await getDownloadURL(snapshot.ref);
-              await addDoc(galleryRef, { url });
-              displayMessage('Image uploaded successfully!');
-              loadGallery(); // Refresh gallery after successful upload
-              fileInput.value = '';
-              imageUrlInput.value = '';
-          } catch (error) {
-              console.error('Error uploading file:', error);
-              displayMessage('Error uploading image.', true);
-          }
-      } else if (imageUrl) {
-          // Add URL to Firestore if no file uploaded
-          try {
-              await addDoc(galleryRef, { url: imageUrl });
-              displayMessage('Image URL added successfully!');
-              loadGallery(); // Refresh gallery after adding URL
-              fileInput.value = '';
-              imageUrlInput.value = '';
-          } catch (error) {
-              console.error('Error adding image URL:', error);
-              displayMessage('Error adding image URL.', true);
-          }
-      } else {
-          displayMessage('Please select a file or enter an image URL.', true);
-      }
-  });
-
-  // Handle form submission for adding newsletters
-  document.getElementById('newsletter-form').addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const newsTitle = document.getElementById('news-title').value.trim();
-      const newsContent = document.getElementById('news-content').value.trim();
-      const bulletPoints = Array.from(document.getElementsByClassName('bullet-point')).map(bp => bp.value.trim());
-      const newsImageFile = document.getElementById('news-image').files[0];
-      const newsVideoFile = document.getElementById('news-video').files[0];
-      const thumbnailFile = document.getElementById('news-thumbnail').files[0];
-
+      const storageRef = ref(storage, `gallery/${file.name}`);
       try {
-          let imageUrl = '', videoUrl = '', thumbnailUrl = '';
-
-          // Upload files to Firebase Storage and get URLs
-          if (newsImageFile) {
-              const imageStorageRef = ref(storage, 'newsletters/' + newsImageFile.name);
-              const imageSnapshot = await uploadBytes(imageStorageRef, newsImageFile);
-              imageUrl = await getDownloadURL(imageSnapshot.ref);
-          }
-
-          if (newsVideoFile) {
-              const videoStorageRef = ref(storage, 'newsletters/videos/' + newsVideoFile.name);
-              const videoSnapshot = await uploadBytes(videoStorageRef, newsVideoFile);
-              videoUrl = await getDownloadURL(videoSnapshot.ref);
-          }
-
-          if (thumbnailFile) {
-              const thumbnailStorageRef = ref(storage, 'newsletters/thumbnails/' + thumbnailFile.name);
-              const thumbnailSnapshot = await uploadBytes(thumbnailStorageRef, thumbnailFile);
-              thumbnailUrl = await getDownloadURL(thumbnailSnapshot.ref);
-          }
-
-          // Add newsletter details to Firestore
-          await addDoc(newsletterRef, {
-              title: newsTitle,
-              content: newsContent,
-              bulletPoints: bulletPoints,
-              imageUrl: imageUrl,
-              videoUrl: videoUrl,
-              thumbnailUrl: thumbnailUrl,
-              createdAt: new Date(),
-          });
-
-          displayMessage('Newsletter added successfully!');
-          document.getElementById('newsletter-form').reset();
+        await uploadBytes(storageRef, file);
+        const downloadURL = await getDownloadURL(storageRef);
+        await addDoc(galleryRef, { url: downloadURL });
+        displayMessage('Image added successfully!');
+        loadGallery();
       } catch (error) {
-          console.error('Error adding newsletter:', error);
-          displayMessage('Error adding newsletter.', true);
+        displayMessage('Error uploading image', true);
       }
+    } else if (urlInput.value.trim() !== '') {
+      try {
+        await addDoc(galleryRef, { url: urlInput.value.trim() });
+        displayMessage('Image added successfully!');
+        loadGallery();
+      } catch (error) {
+        displayMessage('Error adding image', true);
+      }
+    } else {
+      displayMessage('Please upload an image or provide a URL', true);
+    }
+
+    fileInput.value = '';
+    urlInput.value = '';
   });
+
+  // Delete from Gallery
+  document.getElementById('gallery-preview').addEventListener('click', async (event) => {
+    if (event.target.classList.contains('delete-button')) {
+      const docId = event.target.getAttribute('data-id');
+      try {
+        await deleteDoc(doc(galleryRef, docId));
+        displayMessage('Image deleted successfully');
+        loadGallery();
+      } catch (error) {
+        displayMessage('Error deleting image', true);
+      }
+    }
+  });
+
+  // Load gallery on page load
+  loadGallery();
+
+  // ----------------------------------------------
+  // Newsletter Functions
+  // ----------------------------------------------
+
+  // Fetch existing newsletters
+  async function fetchCurrentNewsletters() {
+    const newslettersContainer = document.getElementById('currentNewsletters');
+    newslettersContainer.innerHTML = '';
+
+    try {
+      const querySnapshot = await getDocs(newsletterRef);
+      querySnapshot.forEach(async (docSnapshot) => {
+        const newsletterData = docSnapshot.data();
+        const newsletterCard = createNewsletterCard(newsletterData, docSnapshot.id);
+        newslettersContainer.appendChild(newsletterCard);
+      });
+    } catch (error) {
+      displayMessage('Error fetching newsletters', true);
+    }
+  }
+
+  // Create newsletter card
+  function createNewsletterCard(newsletterData, newsletterId) {
+    const newsletterCard = document.createElement('div');
+    newsletterCard.className = 'newsletter-card';
+
+    const title = document.createElement('h5');
+    title.textContent = `Title: ${newsletterData.title}`;
+    newsletterCard.appendChild(title);
+
+    const description = document.createElement('p');
+    description.textContent = `Description: ${newsletterData.description}`;
+    newsletterCard.appendChild(description);
+
+    const highlights = document.createElement('ul');
+    newsletterData.highlights.forEach((highlight) => {
+      const li = document.createElement('li');
+      li.textContent = highlight;
+      highlights.appendChild(li);
+    });
+    newsletterCard.appendChild(highlights);
+     // Additional Info
+  if (newsletterData.additionalInfo) {
+    const additionalInfo = document.createElement('p');
+    additionalInfo.textContent = `Additional Info: ${newsletterData.additionalInfo}`;
+    newsletterCard.appendChild(additionalInfo);
+  }
+
+    const videoElement = document.createElement('video');
+    videoElement.src = newsletterData.mediaURL;
+    videoElement.controls = true;
+    videoElement.style.width = '100%';
+    newsletterCard.appendChild(videoElement);
+
+    if (newsletterData.thumbnailURL) {
+      const thumbnail = document.createElement('img');
+      thumbnail.src = newsletterData.thumbnailURL;
+      thumbnail.alt = 'Video Thumbnail';
+      thumbnail.style.width = '100%';
+      newsletterCard.appendChild(thumbnail);
+    }
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'delete-button';
+    deleteBtn.textContent = 'Delete Newsletter';
+    deleteBtn.addEventListener('click', () => deleteNewsletter(newsletterId));
+    newsletterCard.appendChild(deleteBtn);
+
+    return newsletterCard;
+  }
+
+  // Delete newsletter
+  async function deleteNewsletter(newsletterId) {
+    try {
+      await deleteDoc(doc(newsletterRef, newsletterId));
+      displayMessage('Newsletter deleted successfully', false);
+      fetchCurrentNewsletters();
+    } catch (error) {
+      displayMessage('Error deleting newsletter', true);
+    }
+  }
+
+  // Add new newsletter
+  document.getElementById('updateNewsletterBtn').addEventListener('click', async function() {
+    const newsletterTitle = document.getElementById('newsletterTitle').value.trim();
+    const newsletterDescription = document.getElementById('newsletterDescription').value.trim();
+    const additionalInfo = document.getElementById('additionalInfo').value.trim();
+    const highlightItems = Array.from(document.getElementById('highlightList').getElementsByTagName('li')).map(li => li.textContent);
+    const newsletterMedia = document.getElementById('newsletterMedia').files[0];
+    let mediaURL = '';
+    let thumbnailURL = '';
+
+    displayMessage('Uploading newsletter, please wait...', false);
+
+    if (!newsletterTitle || !newsletterDescription || highlightItems.length === 0) {
+      displayMessage('Please fill out all required fields.', true);
+      return;
+    }
+
+    try {
+      const querySnapshot = await getDocs(newsletterRef);
+      querySnapshot.forEach(async (existingDoc) => {
+        await deleteDoc(doc(newsletterRef, existingDoc.id));
+      });
+
+      if (newsletterMedia) {
+        const mediaRef = ref(storage, `newsletters/${newsletterMedia.name}`);
+        const snapshot = await uploadBytes(mediaRef, newsletterMedia);
+        mediaURL = await getDownloadURL(snapshot.ref);
+
+        if (newsletterMedia.type.includes('video')) {
+          const videoThumbnail = document.getElementById('videoThumbnail').files[0];
+          if (videoThumbnail) {
+            const thumbRef = ref(storage, `thumbnails/${videoThumbnail.name}`);
+            const thumbSnapshot = await uploadBytes(thumbRef, videoThumbnail);
+            thumbnailURL = await getDownloadURL(thumbSnapshot.ref);
+          }
+        }
+      }
+
+      await addDoc(newsletterRef, {
+        title: newsletterTitle,
+        description: newsletterDescription,
+        highlights: highlightItems,
+        additionalInfo,
+        mediaURL,
+        thumbnailURL
+      });
+
+      displayMessage('Newsletter uploaded successfully!', false);
+      fetchCurrentNewsletters();
+
+      document.getElementById('newsletterTitle').value = '';
+      document.getElementById('newsletterDescription').value = '';
+      document.getElementById('additionalInfo').value = '';
+      document.getElementById('highlightList').innerHTML = '';
+      document.getElementById('newsletterMedia').value = '';
+      document.getElementById('videoThumbnail').value = '';
+      document.getElementById('thumbnailInputContainer').style.display = 'none';
+    } catch (error) {
+      displayMessage('Error uploading newsletter', true);
+    }
+  });
+
+  // Load newsletters on page load
+  fetchCurrentNewsletters();
 </script>
+
 
 </body>
 </html>
