@@ -105,6 +105,9 @@
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="newsletter-tab" data-bs-toggle="tab" data-bs-target="#newsletter-editor" type="button" role="tab" aria-controls="newsletter-editor" aria-selected="false">Newsletter Editor</button>
   </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="alumni-tab" data-bs-toggle="tab" data-bs-target="#alumni-editor" type="button" role="tab" aria-controls="newsletter-editor" aria-selected="false">Alumni Editor</button>
+  </li>
 </ul>
 
 <!-- Tab content -->
@@ -189,6 +192,38 @@
 
       </div>
     </div>
+  </div>
+
+  <!--Alumin Editor-->
+  <div class="tab-pane fade" id="alumni-editor" role="tabpanel" aria-labelledby="alumni-tab">
+    <div class="container mt-4">
+      <h2 class="text-success">Edit Alumni</h2>
+
+      <!-- Section for Adding New Students -->
+      <div class="form-section">
+          <form id="student-form" class="mb-4">
+              <label for="class-name" class="form-label">Class Year (must be in shortened year format, e.g., "'23")</label>
+              <input type="text" class="form-control" id="class-name" class="form-control" placeholder="Enter class name (e.g., Class 05)" required>
+
+              <label for="student-name" class="form-label mt-2">Student Name</label>
+              <input type="text" class="form-control" id="student-name" class="form-control" placeholder="Enter student name" required>
+
+              <label for="student-image" class="form-label mt-2">Student Image</label>
+              <input type="file" class="form-control" id="student-image" required>
+
+              <button  class="btn btn-success mt-3" type="submit">Add Student</button>
+          </form>
+      </div>
+
+      <!-- Section for Displaying Current Classes -->
+      <div class="current-classes">
+          <h2>Current Classes and Students</h2>
+          <ul class="class-list" id="class-list">
+              <!-- This is where the classes and students will be dynamically inserted -->
+          </ul>
+      </div>
+  </div>
+
   </div>
 </div>
 
