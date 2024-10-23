@@ -399,24 +399,27 @@
     }
   }
 
-  // Function to load newsletters
   async function loadNewsletters() {
-    const swiperWrapper = document.querySelector('.swiper-wrapper');
-    swiperWrapper.innerHTML = ''; // Clear current slides
+  const swiperWrapper = document.querySelector('.swiper-wrapper');
+  swiperWrapper.innerHTML = ''; // Clear current slides
 
-    try {
-      const querySnapshot = await getDocs(newsletterRef);
-      querySnapshot.forEach((doc) => {
-        const newsletterData = doc.data();
-        const swiperSlide = createNewsletterSlide(newsletterData);
-        swiperWrapper.appendChild(swiperSlide);
-      });
-    } catch (error) {
-      console.error('Error loading newsletters:', error);
-      displayMessage('Error loading newsletters', true);
-    }
+  try {
+    const querySnapshot = await getDocs(newsletterRef);
+    querySnapshot.forEach((doc) => {
+      const newsletterData = doc.data();
+      const swiperSlide = createNewsletterSlide(newsletterData);
+      swiperWrapper.appendChild(swiperSlide);
+    });
+
+    // Initialize GLightbox for both images and videos
+    const lightbox = GLightbox({
+      selector: '.glightbox'
+    });
+  } catch (error) {
+    console.error('Error loading newsletters:', error);
+    displayMessage('Error loading newsletters', true);
   }
-
+}
   // Function to create newsletter slide
   function createNewsletterSlide(newsletterData) {
     const swiperSlide = document.createElement('div');

@@ -8,9 +8,9 @@
   <meta name="description" content="">
   <meta name="keywords" content="">
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+ <!-- Favicons -->
+ <link href="assets/img/book.png" rel="icon">
+ <link href="assets/img/book.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -169,11 +169,12 @@
                 font-size: 2em;
                 color: #333;
                 margin-bottom: 20px;
+                margin-top: 10px;
                 font-weight: bold;
             }
     
             .yearbook-item {
-                width: 180px;
+                width: 200px;
                 background-color: #fff;
                 box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
                 text-align: center;
@@ -218,7 +219,7 @@
             /* Mobile responsiveness */
             @media (max-width: 600px) {
                 .yearbook-item {
-                    width: calc(50% - 20px);
+                    width: calc(55% -10px);
                 }
             }
         </style>
@@ -232,54 +233,77 @@
         <p>Here’s a trip down memory lane! Celebrate the graduating classes and relive the moments from the Class of '09, '10, and more.</p>
     </div>
         <div class="yearbook">
-            <div class="yearbook-set">
-                <h3>Class of '09</h3>
-                <div class="yearbook-item">
-                    <img src="https://neweralive.na/wp-content/uploads/2024/06/lloyd-sikeba.jpg" alt="Person 1">
-                    <h4>Person 1</h4>
-                </div>
-                <div class="yearbook-item">
-                    <img src="https://neweralive.na/wp-content/uploads/2024/06/lloyd-sikeba.jpg" alt="Person 2">
-                    <h4>Person 2</h4>
-                </div>
-                <div class="yearbook-item">
-                    <img src="https://neweralive.na/wp-content/uploads/2024/06/lloyd-sikeba.jpg" alt="Person 3">
-                    <h4>Person 3</h4>
-                </div>
-                <div class="yearbook-item">
-                    <img src="https://neweralive.na/wp-content/uploads/2024/06/lloyd-sikeba.jpg" alt="Person 4">
-                    <h4>Person 4</h4>
-                </div>
-                <div class="yearbook-item">
-                    <img src="https://neweralive.na/wp-content/uploads/2024/06/lloyd-sikeba.jpg" alt="Person 5">
-                    <h4>Person 5</h4>
-                </div>
-            </div>
-    
-            <div class="yearbook-set">
-                <h3>Class of '10</h3>
-                <div class="yearbook-item">
-                    <img src="https://neweralive.na/wp-content/uploads/2024/06/lloyd-sikeba.jpg" alt="Person 6">
-                    <h4>Person 6</h4>
-                </div>
-                <div class="yearbook-item">
-                    <img src="https://neweralive.na/wp-content/uploads/2024/06/lloyd-sikeba.jpg" alt="Person 7">
-                    <h4>Person 7</h4>
-                </div>
-                <div class="yearbook-item">
-                    <img src="https://neweralive.na/wp-content/uploads/2024/06/lloyd-sikeba.jpg" alt="Person 8">
-                    <h4>Person 8</h4>
-                </div>
-                <div class="yearbook-item">
-                    <img src="https://neweralive.na/wp-content/uploads/2024/06/lloyd-sikeba.jpg" alt="Person 9">
-                    <h4>Person 9</h4>
-                </div>
-                <div class="yearbook-item">
-                    <img src="https://neweralive.na/wp-content/uploads/2024/06/lloyd-sikeba.jpg" alt="Person 10">
-                    <h4>Person 10</h4>
-                </div>
-            </div>
+          <div id="yearbook-container"></div>
+
         </div>
+        <script type="module">
+          // Import Firebase modules
+          import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+          import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
+          import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, arrayUnion, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+          
+          // Firebase configuration
+          const firebaseConfig = {
+              apiKey: "AIzaSyDKHZ1viqinUqJcs4He9QGnq2Ld82jSt-M",
+              authDomain: "juli-tola.firebaseapp.com",
+              projectId: "juli-tola",
+              storageBucket: "juli-tola.appspot.com",
+              messagingSenderId: "452807393853",
+              appId: "1:452807393853:web:2c58c3ca257ea605f6e054",
+              measurementId: "G-FVNPXHKQLJ"
+          };
+      
+          // Initialize Firebase
+          const app = initializeApp(firebaseConfig);
+          const db = getFirestore(app);
+      
+          // Function to load current classes and students dynamically
+          async function loadClasses() {
+              const classList = document.getElementById('yearbook-container');
+              classList.innerHTML = ''; // Clear previous content
+      
+              try {
+                  const classesSnapshot = await getDocs(collection(db, 'classes'));
+                  classesSnapshot.forEach(doc => {
+                      const className = doc.id;
+                      const students = doc.data().students || [];
+      
+                      // Create the yearbook set for each class
+                      const yearbookSet = document.createElement('div');
+                      yearbookSet.classList.add('yearbook-set');
+      
+                      // Create the header for the class
+                      const classHeader = document.createElement('h3');
+                      classHeader.textContent = `Class of '${className}`;
+                      yearbookSet.appendChild(classHeader);
+      
+                      // Create yearbook items for each student
+                      students.forEach(student => {
+                          const yearbookItem = document.createElement('div');
+                          yearbookItem.classList.add('yearbook-item');
+      
+                          const studentImg = document.createElement('img');
+                          studentImg.src = student.imageUrl;
+                          studentImg.alt = student.name;
+      
+                          const studentName = document.createElement('h4');
+                          studentName.textContent = student.name;
+      
+                          yearbookItem.appendChild(studentImg);
+                          yearbookItem.appendChild(studentName);
+                          yearbookSet.appendChild(yearbookItem);
+                      });
+      
+                      classList.appendChild(yearbookSet);
+                  });
+              } catch (error) {
+                  console.error("Error loading classes:", error);
+              }
+          }
+      
+          // Load classes on page load
+          window.onload = loadClasses;
+      </script>
     </section>
     
     
