@@ -239,6 +239,23 @@ button:hover {
     font-size: 0.9rem;
   }
 }
+
+ /* Modal styling */
+ .modal-iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+    }
+
+  .application  .card-header, .btn-primary {
+      background-color: #4caf50; /* Primary green color */
+      color: #fff;
+    }
+    .application .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
   </style>
 </head>
 <body>
@@ -252,7 +269,10 @@ button:hover {
     <button class="nav-link" id="newsletter-tab" data-bs-toggle="tab" data-bs-target="#newsletter-editor" type="button" role="tab" aria-controls="newsletter-editor" aria-selected="false">Newsletter Editor</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="alumni-tab" data-bs-toggle="tab" data-bs-target="#alumni-editor" type="button" role="tab" aria-controls="newsletter-editor" aria-selected="false">Alumni Editor</button>
+    <button class="nav-link" id="alumni-tab" data-bs-toggle="tab" data-bs-target="#alumni-editor" type="button" role="tab" aria-controls="alumni-editor" aria-selected="false">Alumni Editor</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="application_tab" data-bs-toggle="tab" data-bs-target="#application-form" type="button" role="tab" aria-controls="application-form" aria-selected="false">Applications</button>
   </li>
 </ul>
 
@@ -371,6 +391,34 @@ button:hover {
   </div>
 
   </div>
+
+  <!-- Application Form -->
+  <div class="tab-pane fade" id="application-form" role="tabpanel" aria-labelledby="application_tab">
+
+    <div class="container application mt-4">    
+      <h2 class="text-success mb-4">View Applications</h2>
+
+      <!-- Application Forms List -->
+      <div id="formsList" class="row gy-3">
+        <!-- Dynamic content will be loaded here -->
+      </div>
+    </div>
+    
+<!-- Modal for Previewing Forms -->
+<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="previewModalLabel">Form Preview</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <iframe id="previewIframe" class="modal-iframe"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
 </div>
 
 <div class="back-to-site">
@@ -379,12 +427,13 @@ button:hover {
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script type="module">
   // Import Firebase modules
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
+  import { getStorage, ref, uploadBytes, deleteObject, listAll, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
   import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, arrayUnion, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
   // Firebase configuration
@@ -424,6 +473,7 @@ button:hover {
         title: 'Success',
         text: message,
       });
+      
     }
   }
 
@@ -672,7 +722,6 @@ fetchCurrentNewsletters();
   // Alumni Functions
   // ----------------------------------------------
 
-        // Handle form submission
         document.getElementById('student-form').addEventListener('submit', async (e) => {
             e.preventDefault();
     
@@ -681,17 +730,14 @@ fetchCurrentNewsletters();
             const studentImage = document.getElementById('student-image').files[0];
     
             try {
-                // Upload image to Firebase Storage
                 const storageRef = ref(storage, `students/${studentImage.name}`);
                 await uploadBytes(storageRef, studentImage);
                 const imageUrl = await getDownloadURL(storageRef);
     
-                // Get the document reference for the class
                 const classDoc = doc(db, 'classes', className);
                 const classData = await getDoc(classDoc);
     
                 if (classData.exists()) {
-                    // Class exists, add student to the existing array
                     await updateDoc(classDoc, {
                         students: arrayUnion({
                             name: studentName,
@@ -699,7 +745,6 @@ fetchCurrentNewsletters();
                         })
                     });
                 } else {
-                    // Create a new class with the student
                     await setDoc(classDoc, {
                         students: [{
                             name: studentName,
@@ -708,7 +753,6 @@ fetchCurrentNewsletters();
                     });
                 }
     
-                // Reset form and display success SweetAlert
                 document.getElementById('student-form').reset();
                 Swal.fire({
                     icon: 'success',
@@ -727,7 +771,6 @@ fetchCurrentNewsletters();
             }
         });
     
-        // Function to load current classes and students
         async function loadClasses() {
             const classList = document.getElementById('class-list');
             classList.innerHTML = '';
@@ -759,7 +802,6 @@ fetchCurrentNewsletters();
             });
         }
     
-        // Assign deleteClass to the window object to make it globally accessible
         window.deleteClass = async function(className) {
             Swal.fire({
                 title: `Are you sure you want to delete ${className}?`,
@@ -781,7 +823,6 @@ fetchCurrentNewsletters();
             });
         };
     
-       // Assign deleteStudent to the window object to make it globally accessible
 window.deleteStudent = async function(className, studentIndex) {
     Swal.fire({
         title: `Are you sure you want to delete this student?`,
@@ -798,7 +839,6 @@ window.deleteStudent = async function(className, studentIndex) {
                 const students = classData.data().students;
                 students.splice(studentIndex, 1); // Remove the student at the specified index
 
-                // Update Firestore with the new student list
                 await updateDoc(classDoc, { students: students });
 
                 loadClasses(); // Refresh the UI
@@ -814,8 +854,92 @@ window.deleteStudent = async function(className, studentIndex) {
     });
 };
 
-        // Load classes on page load
         window.onload = loadClasses;
+
+
+  // ----------------------------------------------
+  // Application Functions
+  // ----------------------------------------------
+
+  // Load and Display Forms
+  async function loadForms() {
+    const formsList = document.getElementById("formsList");
+    formsList.innerHTML = ""; // Clear the list
+
+    const storageRef = ref(storage, "application_forms/");
+    try {
+      const formsSnapshot = await listAll(storageRef);
+
+      if (formsSnapshot.items.length === 0) {
+        formsList.innerHTML = `<div class="col-12"><p class="text-center text-muted">No forms available.</p></div>`;
+      }
+
+      for (const itemRef of formsSnapshot.items) {
+        const downloadURL = await getDownloadURL(itemRef);
+        const formName = itemRef.name;
+
+        // Card for each form
+        const formCard = document.createElement("div");
+        formCard.className = "col-md-4";
+        formCard.innerHTML = `
+          <div class="card shadow-sm">
+            <div class="card-header">${formName}</div>
+            <div class="card-body text-center">
+              <div class="btn-container">
+                <button class="btn btn-success" onclick="openPreview('${downloadURL}')">Preview</button>
+                <button class="btn btn-danger" onclick="confirmDelete('${formName}')">Delete</button>
+              </div>
+            </div>
+          </div>
+        `;
+        formsList.appendChild(formCard);
+      }
+    } catch (error) {
+      console.error("Error loading forms:", error);
+      formsList.innerHTML = `<div class="col-12"><p class="text-center text-danger">Failed to load forms.</p></div>`;
+    }
+  }
+
+  // Delete a form
+  async function deleteForm(formName) {
+    try {
+      const fileRef = ref(storage, `application_forms/${formName}`);
+      await deleteObject(fileRef);
+
+      Swal.fire("Deleted!", "The form has been deleted.", "success");
+      loadForms(); // Reload the forms list
+    } catch (error) {
+      Swal.fire("Error", `Failed to delete form: ${error.message}`, "error");
+    }
+  }
+
+  // Confirm Delete with SweetAlert
+  window.confirmDelete = function(formName) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#4caf50",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteForm(formName);
+      }
+    });
+  }
+
+  // Open Preview in Modal
+  window.openPreview = function(downloadURL) {
+    const previewIframe = document.getElementById("previewIframe");
+    previewIframe.src = downloadURL;
+    const previewModal = new bootstrap.Modal(document.getElementById("previewModal"));
+    previewModal.show();
+  }
+
+  // Initial Load
+  loadForms();
 
 </script>
 

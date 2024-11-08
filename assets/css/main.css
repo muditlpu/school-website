@@ -167,47 +167,6 @@ h6 {
   }
 }
 
-/* PHP Email Form Messages
-------------------------------*/
-.php-email-form .error-message {
-  display: none;
-  background: #df1529;
-  color: #ffffff;
-  text-align: left;
-  padding: 15px;
-  margin-bottom: 24px;
-  font-weight: 600;
-}
-
-.php-email-form .sent-message {
-  display: none;
-  color: #ffffff;
-  background: #059652;
-  text-align: center;
-  padding: 15px;
-  margin-bottom: 24px;
-  font-weight: 600;
-}
-
-.php-email-form .loading {
-  display: none;
-  background: var(--surface-color);
-  text-align: center;
-  padding: 15px;
-  margin-bottom: 24px;
-}
-
-.php-email-form .loading:before {
-  content: "";
-  display: inline-block;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  margin: 0 10px -6px 0;
-  border: 3px solid var(--accent-color);
-  border-top-color: var(--surface-color);
-  animation: php-email-form-loading 1s linear infinite;
-}
 
 @keyframes php-email-form-loading {
   0% {
@@ -976,7 +935,7 @@ section,
 }
 
 .about .content p{
-  line-height: 2.2;
+  line-height: 2;
 }
 
 .about .content p:last-child {
@@ -1679,4 +1638,72 @@ section,
   .carousel-container p{
     font-weight: 700;
   }
+}
+
+
+/*--------------------------------------------------------------
+# Application Section
+--------------------------------------------------------------*/
+
+.sec .section-title{
+  padding-bottom: 0;
+}
+
+.sec .download .btn-primary{
+  background-color: color-mix(in srgb, var(--accent-color), transparent 70%);
+  border: none;
+  color: #000000;
+}
+
+.sec .card{
+  max-width: 500px;
+}
+
+.sec .download .btn-primary:hover {
+  background-color: #00aa6f;
+  transform: scale(1.05);
+  color: #fff;
+}
+
+.sec .form-label {
+  font-weight: 600;
+  color: #333;
+}
+
+.sec .form-control {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.sec .form-control:focus {
+  border-color: #0044cc;
+  box-shadow: 0 0 5px rgba(0, 68, 204, 0.2);
+}
+
+.sec .alert-warning{
+  background-color: transparent;
+  color: #dfae0d;
+  font-weight: 700;
+  border: none;
+  text-align: center;
+
+}
+
+.sec .alert-success{
+  background-color: transparent;
+  color: #22df0d;
+  font-weight: 700;
+  border: none;
+  text-align: center;
+
+}
+
+ /* Modal styling */
+ .modal-iframe {
+  width: 100%;
+  height: 500px;
+  border: none;
 }

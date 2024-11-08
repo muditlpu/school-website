@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Application Form Management</title>
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  
+  <!-- SweetAlert2 Script -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.all.min.js"></script>
+  
+  <style>
+    body {
+      background-color: #e0f7ea; /* Light green background */
+    }
+    .container {
+      margin-top: 20px;
+    }
+    .card-header, .btn-primary {
+      background-color: #4caf50; /* Primary green color */
+      color: #fff;
+    }
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    /* Modal styling */
+    .modal-iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2 class="text-center my-4">Admin - Manage Application Forms</h2>
+
+  <!-- Application Forms List -->
+  <div id="formsList" class="row gy-3">
+    <!-- Dynamic content will be loaded here -->
+  </div>
+</div>
+
+<!-- Modal for Previewing Forms -->
+<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="previewModalLabel">Form Preview</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <iframe id="previewIframe" class="modal-iframe"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase Script -->
+<script type="module">
+  // Import Firebase modules
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+  import { getStorage, ref, deleteObject, listAll, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
+  
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDKHZ1viqinUqJcs4He9QGnq2Ld82jSt-M",
+    authDomain: "juli-tola.firebaseapp.com",
+    projectId: "juli-tola",
+    storageBucket: "juli-tola.appspot.com",
+    messagingSenderId: "452807393853",
+    appId: "1:452807393853:web:2c58c3ca257ea605f6e054",
+    measurementId: "G-FVNPXHKQLJ"
+  };
+  
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app);
+
+  // Load and Display Forms
+  async function loadForms() {
+    const formsList = document.getElementById("formsList");
+    formsList.innerHTML = ""; // Clear the list
+
+    const storageRef = ref(storage, "application_forms/");
+    try {
+      const formsSnapshot = await listAll(storageRef);
+
+      if (formsSnapshot.items.length === 0) {
+        formsList.innerHTML = `<div class="col-12"><p class="text-center text-muted">No forms available.</p></div>`;
+      }
+
+      for (const itemRef of formsSnapshot.items) {
+        const downloadURL = await getDownloadURL(itemRef);
+        const formName = itemRef.name;
+
+        // Card for each form
+        const formCard = document.createElement("div");
+        formCard.className = "col-md-4";
+        formCard.innerHTML = `
+          <div class="card shadow-sm">
+            <div class="card-header">${formName}</div>
+            <div class="card-body text-center">
+              <div class="btn-container">
+                <button class="btn btn-success" onclick="openPreview('${downloadURL}')">Preview</button>
+                <button class="btn btn-danger" onclick="confirmDelete('${formName}')">Delete</button>
+              </div>
+            </div>
+          </div>
+        `;
+        formsList.appendChild(formCard);
+      }
+    } catch (error) {
+      console.error("Error loading forms:", error);
+      formsList.innerHTML = `<div class="col-12"><p class="text-center text-danger">Failed to load forms.</p></div>`;
+    }
+  }
+
+  // Delete a form
+  async function deleteForm(formName) {
+    try {
+      const fileRef = ref(storage, `application_forms/${formName}`);
+      await deleteObject(fileRef);
+
+      Swal.fire("Deleted!", "The form has been deleted.", "success");
+      loadForms(); // Reload the forms list
+    } catch (error) {
+      Swal.fire("Error", `Failed to delete form: ${error.message}`, "error");
+    }
+  }
+
+  // Confirm Delete with SweetAlert
+  window.confirmDelete = function(formName) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#4caf50",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteForm(formName);
+      }
+    });
+  }
+
+  // Open Preview in Modal
+  window.openPreview = function(downloadURL) {
+    const previewIframe = document.getElementById("previewIframe");
+    previewIframe.src = downloadURL;
+    const previewModal = new bootstrap.Modal(document.getElementById("previewModal"));
+    previewModal.show();
+  }
+
+  // Initial Load
+  loadForms();
+
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

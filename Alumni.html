@@ -47,7 +47,6 @@
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
         <a href="index.html" class="logo d-flex align-items-center">
-          <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="assets/img/logo.png" alt=""> -->
           <h1 class="sitename" style="color: red;"><span style="color: green;">Juli</span>tola</h1>
         </a>
@@ -56,15 +55,15 @@
           <ul>
             <li><a href="index.html#hero" class="active">Home</a></li>
             <li><a href="index.html#about">About</a></li>
-            <li><a href="index.html#why">Academics</a></li>
-            <li><a href="index.html#specials">Activities</a></li>
-            <li><a href="index.html#events">News</a></li>
+            <li><a href="index.html#academics">Academics</a></li>
+              <li><a href="index.html#activities">Activities</a></li>
+              <li><a href="index.html#news">News</a></li>
             <li><a href="index.html#gallery">Gallery</a></li>
             <li class="dropdown"><a href="#discover"><span>Discover</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
-                <li><a href="#">Career</a></li>
-                <li><a href="#">Alumni</a></li>
-               
+                <li><a href="Alumni.html#discover">Alumni</a></li>
+                <li><a href="ApplicationPri.html">Application Form Primary</a></li> 
+                <li><a href="ApplicationSec.html">Application Form Secondary</a></li>
               </ul>
             </li>
             <li><a href="index.html#contact">Contact</a></li>
@@ -230,19 +229,17 @@
         <div><span>Check Our</span> <span class="description-title">Yearbook</span></div>
       </div><!-- End Section Title -->
       <div class="yearbook-description">
-        <p>Here’s a trip down memory lane! Celebrate the graduating classes and relive the moments from the Class of '09, '10, and more.</p>
+        <p>Here’s a trip down memory lane! Celebrate the graduating classes and relive the moments.</p>
     </div>
         <div class="yearbook">
           <div id="yearbook-container"></div>
 
         </div>
         <script type="module">
-          // Import Firebase modules
           import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
           import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
           import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, arrayUnion, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
           
-          // Firebase configuration
           const firebaseConfig = {
               apiKey: "AIzaSyDKHZ1viqinUqJcs4He9QGnq2Ld82jSt-M",
               authDomain: "juli-tola.firebaseapp.com",
@@ -253,14 +250,12 @@
               measurementId: "G-FVNPXHKQLJ"
           };
       
-          // Initialize Firebase
           const app = initializeApp(firebaseConfig);
           const db = getFirestore(app);
       
-          // Function to load current classes and students dynamically
           async function loadClasses() {
               const classList = document.getElementById('yearbook-container');
-              classList.innerHTML = ''; // Clear previous content
+              classList.innerHTML = ''; 
       
               try {
                   const classesSnapshot = await getDocs(collection(db, 'classes'));
@@ -268,16 +263,13 @@
                       const className = doc.id;
                       const students = doc.data().students || [];
       
-                      // Create the yearbook set for each class
                       const yearbookSet = document.createElement('div');
                       yearbookSet.classList.add('yearbook-set');
       
-                      // Create the header for the class
                       const classHeader = document.createElement('h3');
                       classHeader.textContent = `Class of '${className}`;
                       yearbookSet.appendChild(classHeader);
       
-                      // Create yearbook items for each student
                       students.forEach(student => {
                           const yearbookItem = document.createElement('div');
                           yearbookItem.classList.add('yearbook-item');
@@ -301,7 +293,6 @@
               }
           }
       
-          // Load classes on page load
           window.onload = loadClasses;
       </script>
     </section>
@@ -386,14 +377,12 @@
          
          <script>
           document.getElementById('contact-form').addEventListener('submit', function(event) {
-             event.preventDefault(); // Prevent the default form submission
+             event.preventDefault(); 
           
-             // Reset the visibility of all messages before sending
              document.querySelector('.loading').style.display = 'block';
              document.querySelector('.err-message').style.display = 'none';
              document.querySelector('.sent-message').style.display = 'none';
           
-             // Collect form data
              var formData = {
                 name: document.getElementById('name').value,
                 email: document.getElementById('email').value,
@@ -401,22 +390,18 @@
                 message: document.getElementById('message').value,
              };
           
-             // Send the email using Email.js
              emailjs.send("service_nescwfd", "template_9pjxwwb", formData)
              .then(function(response) {
                 console.log('SUCCESS!', response.status, response.text);
                 
-                // Hide loading and error messages, show success message
                 document.querySelector('.loading').style.display = 'none';
                 document.querySelector('.err-message').style.display = 'none';
                 document.querySelector('.sent-message').style.display = 'block';
           
-                // Reset the form
                 document.getElementById('contact-form').reset();
              }, function(error) {
                 console.log('FAILED...', error);
                 
-                // Hide loading and success messages, show error message
                 document.querySelector('.loading').style.display = 'none';
                 document.querySelector('.sent-message').style.display = 'none';
                 document.querySelector('.err-message').style.display = 'block';
