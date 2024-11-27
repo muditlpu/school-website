@@ -34,7 +34,7 @@
   padding: 20px;
 }
 
-h2 {
+#admin-login h2 {
   color: #ffffffef;
   text-align: center;
   margin-bottom: 20px;
@@ -43,12 +43,12 @@ h2 {
 }
 
 @media (min-width: 1024px) {
-    .hero h2, .hero p {
+  #admin-login   .hero h2, #admin-login .hero p {
         max-width: 100%;
     }
 }
 
-label {
+#admin-login label {
   display: block;
   margin-bottom: 5px;
   color: #fff;
@@ -56,7 +56,7 @@ label {
   text-align: start;
 }
 
-input {
+#admin-login input {
   width: 100%; 
   padding: 8px;
   margin-bottom: 10px;
@@ -139,8 +139,27 @@ input[type="password"], input[type="text"] {
           <ul>
             <li><a href="#hero" class="active">Home</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="#why">Academics</a></li>
-            <li><a href="#specials">Activities</a></li>
+            <li class="dropdown">
+              <a href="#academics">
+                  <span>Academics</span>
+                  <!-- This is the small arrow icon beside "Academics." No changes are needed unless styling adjustments are required. -->
+                  <i class="bi bi-chevron-down toggle-dropdown"></i>
+              </a>
+              <!-- This is the dropdown menu under "Academics." To add a new option, insert a new <li> item here. -->
+              <ul>
+                  <!-- Alumni Link: This link directs users to the "Discover" section on the Alumni page. 
+                       To change the text "Alumni," edit it inside the <a> tag. -->
+                  <li><a href="Alumni.html#discover">Alumni</a></li>
+    
+                  <!-- Application Form Primary Link: This takes users to the primary school application form. 
+                       To change the link name, replace "Application Form Primary" with the desired text. -->
+                  <li><a href="ApplicationPri.html">Application Form Primary</a></li>
+    
+                  <!-- Application Form Secondary Link: This directs users to the secondary school application form. 
+                       Edit "Application Form Secondary" to change the displayed text. -->
+                  <li><a href="ApplicationSec.html">Application Form Secondary</a></li>
+              </ul>
+          </li>                 <li><a href="#specials">Activities</a></li>
             <li><a href="#events">News</a></li>
             <li><a href="#gallery">Gallery</a></li>
             <li class="dropdown"><a href="#"><span>Discover</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
@@ -175,7 +194,7 @@ input[type="password"], input[type="text"] {
           <img src="https://img.freepik.com/free-photo/empty-blackboard_53876-138475.jpg?t=st=1729193203~exp=1729196803~hmac=dcac9efcb657298410671920e33917f083a36924176f2e40139515581c0c9557&w=826" alt="">
           <div class="carousel-container">
              <!-- Admin Login Page -->
-    <section id="admin-login" class="section">
+    <section id="admin-login" class="section admin">
       <div class="container text-center" style="max-width: 400px;">
         <h2>Admin Login</h2>
         <form id="login-form">

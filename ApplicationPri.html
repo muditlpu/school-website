@@ -31,9 +31,73 @@
   </head>
 
   <style>
-    .index-page header{
+     .index-page header{
     background-color: rgba(21, 17, 13, 0.85) ;
     }
+   /* General styles */
+body {
+  background-color: #f8f9fa;
+  font-family: Arial, sans-serif;
+}
+
+.form-container {
+  max-width: 600px;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Form steps */
+.form-step {
+  display: none;
+  padding: 20px;
+}
+
+.form-step.active {
+  display: block;
+}
+
+/* Input styling */
+.form-control {
+  border: 2px solid #ddd;
+  transition: all 0.3s ease-in-out;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Button styling */
+button {
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+}
+
+.btn:focus {
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Header styling */
+h2 {
+  margin: 0;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .form-container {
+    padding: 10px;
+  }
+
+  .btn {
+    font-size: 14px;
+  }
+}
+
   </style>
   
   <body class="index-page">
@@ -53,8 +117,28 @@
             <ul>
               <li><a href="index.html#hero">Home</a></li>
               <li><a href="index.html#about">About</a></li>
-              <li><a href="index.html#academics">Academics</a></li>
-              <li><a href="index.html#activities">Activities</a></li>
+              <li class="dropdown">
+                <a href="index#academics">
+                    <span>Academics</span>
+                    <!-- This is the small arrow icon beside "Academics." No changes are needed unless styling adjustments are required. -->
+                    <i class="bi bi-chevron-down toggle-dropdown"></i>
+                </a>
+                <!-- This is the dropdown menu under "Academics." To add a new option, insert a new <li> item here. -->
+                <ul>
+                    <!-- Alumni Link: This link directs users to the "Discover" section on the Alumni page. 
+                         To change the text "Alumni," edit it inside the <a> tag. -->
+                    <li><a href="vocational.html">Vocational</a></li>
+      
+                    <!-- Secondaryy Link: This takes users to the primary school application form. 
+                         To change the link name, replace "Secondary" with the desired text. -->
+                    <li><a href="Secondary.html">Secondary</a></li>
+      
+                    <!-- Application Form Secondary Link: This directs users to the secondary school application form. 
+                         Edit "Application Form Secondary" to change the displayed text. -->
+                    <li><a href="primary.html">Primary</a></li>
+                </ul>
+            </li>      
+                    <li><a href="index.html#activities">Activities</a></li>
               <li><a href="index.html#news">News</a></li>
               <li><a href="index.html#gallery">Gallery</a></li>
               <li class="dropdown"><a href="#discover" class="active"><span>Discover</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
@@ -84,39 +168,271 @@
       
           <div class="container section-title" data-aos="fade-up">
             <h2>Application</h2>
-            <div><span>Download the Application Form for</span> <span class="description-title">Primary Admission</span></div>
+            <div><span>Fill the Application Form for</span> <span class="description-title">Primary Admission</span></div>
           </div>
         
     
         <!-- Download and Upload Form -->
         <div class="container">
-            <!-- Download Button -->
-            <div class="text-center my-4 download">
-                <a href="assets/form/Application Form Primary.pdf" download="Application Form Primary.pdf" class="btn btn-primary btn-lg px-4">
-                    <i class="bi bi-download"></i> Download Application Form
-                </a>
-            </div>
-    
-            <!-- Upload Form -->
-            <div class="card shadow p-4 mx-auto">
-                <h5 class="card-title text-center">Upload Completed Form</h5>
+          <form id="applicationForm">
+            <!-- Step 1: Personal Details -->
+            <div class="form-step active">
+              <h4 class="text-center">Student's Personal Data</h4>
               
-                <form id="uploadForm">
-                    <div class="mb-3">
-                        <label for="formFile" class="form-label">Choose File</label>
-                        <input class="form-control" type="file" id="formFile" accept=".pdf,.doc,.docx">
-                    </div>
-                    <button type="submit" class="btn btn-success w-100">Upload Form</button>
-                </form>
-                <!-- Success/Error Message -->
-                <div id="statusMessage" class="mt-3 text-center"></div>
+              <!-- Grouped Fields: Passport and Name of Applicant -->
+              <div class="row align-items-center mb-3">
+                <!-- Passport Photo Upload -->
+                <div class="col-md-4 text-center mb-3">
+                  <label for="passport" class="form-label d-block">Upload Passport</label>
+                  <div class="border rounded p-2">
+                    <img id="passportPreview" src="https://via.placeholder.com/150" alt="Passport Preview" class="img-fluid rounded mb-2" style="max-width: 150px;">
+                    <input type="file" class="form-control rounded-pill" id="passport" accept="image/*" onchange="previewPassport(event)" required>
+                  </div>
+                </div>
+                
+                <!-- Name of Applicant -->
+                <div class="col-md-8">
+                  <label for="applicantName" class="form-label">Name of Applicant (Surname first)</label>
+                  <input type="text" class="form-control rounded-pill" name="applicantName" id="applicantName" placeholder="Enter full name" required>
+                </div>
+              </div>
+            
+              <!-- Grouped Fields: Date of Birth and Gender -->
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="dob" class="form-label">Date of Birth</label>
+                  <input type="date" class="form-control rounded-pill" name="dob" id="dob" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="gender" class="form-label">Gender</label>
+                  <select class="form-control rounded-pill" name="gender" id="gender" required>
+                    <option value="" disabled selected>Select gender</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                  </select>
+                </div>
+              </div>
+              
+              <!-- Grouped Fields: Religion and Nationality -->
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="religion" class="form-label">Religion</label>
+                  <input type="text" class="form-control rounded-pill" name="religion" id="religion" placeholder="Enter religion" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="nationality" class="form-label">Nationality</label>
+                  <input type="text" class="form-control rounded-pill" name="nationality" id="nationality" placeholder="Enter nationality" required>
+                </div>
+              </div>
+              
+              <!-- Grouped Fields: State and Home Town -->
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="state" class="form-label">State</label>
+                  <input type="text" class="form-control rounded-pill" name="state" id="state" placeholder="Enter state" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="lga" class="form-label">LGA</label>
+                  <input type="text" class="form-control rounded-pill" name="lga" id="lga" placeholder="Enter home town" required>
+                </div>
+              </div>
+              
+              <!-- Present Class -->
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="homeTown" class="form-label">Home Town</label>
+                  <input type="text" class="form-control rounded-pill" name="homeTown" id="homeTown" placeholder="Enter home town" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="presentClass" class="form-label">Present Class</label>
+                  <input type="text" class="form-control rounded-pill" name="presentClass" id="presentClass" placeholder="Enter current class" required>
+                </div>
+              </div>
+              
+              <!-- Name of Last School Attended -->
+              <div class="mb-3">
+                <label for="lastSchool" class="form-label">Name of Last School Attended</label>
+                <input type="text" class="form-control rounded-pill" name="lastSchool" id="lastSchool" placeholder="Enter school name" required>
+              </div>
+              
+              <!-- Class Admission Sought -->
+              <div class="mb-3">
+                <label for="admissionClass" class="form-label">Class To Which Admission Is Being Sought</label>
+                <input type="text" class="form-control rounded-pill" name="admissionClass" id="admissionClass" placeholder="Enter class" required>
+              </div>
+              
+              <!-- Navigation Button -->
+              <button type="button" class="btn btn-success w-100 next-btn rounded-pill">Next</button>
             </div>
+            
+            <script>
+              function previewPassport(event) {
+                const reader = new FileReader();
+                reader.onload = function() {
+                  document.getElementById('passportPreview').src = reader.result;
+                };
+                reader.readAsDataURL(event.target.files[0]);
+              }
+            </script>
+            
+            
+    
+       <!-- Step 2: Passport and Signature -->
+<div class="form-step">
+  <h4 class="text-center">Student's History and Relevant Information</h4>
 
-             <!-- Embedded Viewer for Uploaded Form -->
-        <div id="formViewer" class="mt-4" style="display: none;">
-          <h5>View Uploaded Form</h5>
-          <iframe id="uploadedFormIframe" src="" style="width:100%; height:500px; border:none;"></iframe>
-      </div>
+  <!-- Allergies -->
+  <div class="mb-3">
+    <label for="allergies" class="form-label">Any Allergies? Yes/No</label>
+    <select class="form-control rounded-pill" name="allergies" id="allergies" required>
+      <option value="" disabled selected>Select an option</option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+  </div>
+
+  <!-- List Allergies -->
+  <div class="mb-3">
+    <label for="allergyList" class="form-label">If Yes, List the Allergies</label>
+    <input type="text" class="form-control rounded-pill" name="allergyList" id="allergyList" placeholder="List allergies or leave blank if none" >
+  </div>
+
+  <!-- Medications -->
+  <div class="mb-3">
+    <label for="medications" class="form-label">List Medications Regularly Taken</label>
+    <input type="text" class="form-control rounded-pill" name="medications" id="medications" placeholder="Enter medications or leave blank if none" >
+  </div>
+
+  <!-- Immunization -->
+  <div class="mb-3">
+    <label for="immunization" class="form-label">Is the Child Fully Immunized?</label>
+    <select class="form-control rounded-pill" name="immunization" id="immunization" required >
+      <option value="" disabled selected>Select an option</option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
+  </div>
+
+  <!-- Special Needs -->
+  <div class="mb-3">
+    <label for="specialNeeds" class="form-label">Describe Any Special Needs of the Child (If Any)</label>
+    <textarea class="form-control rounded" name="specialNeeds" id="specialNeeds" rows="3" placeholder="Provide details or leave blank if none"></textarea>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="d-flex justify-content-between">
+    <button type="button" class="btn btn-secondary prev-btn rounded-pill">Previous</button>
+    <button type="button" class="btn btn-success next-btn rounded-pill">Next</button>
+  </div>
+</div>
+
+  <!-- Father's Information -->
+<div class="form-step">
+  <h4 class="text-center">Parent's Information</h4>
+
+  <div class="border rounded p-3 mb-4">
+
+    <!-- Name of Father -->
+    <div class="mb-3">
+      <label for="fatherName" class="form-label">Name of Father</label>
+      <input type="text" class="form-control rounded-pill" name="fatherName" id="fatherName" placeholder="Enter father's name" required>
+    </div>
+
+    <!-- Office Address -->
+    <div class="mb-3">
+      <label for="fatherOfficeAddress" class="form-label">Office Address</label>
+      <input type="text" class="form-control rounded-pill" name="fatherOfficeAddress" id="fatherOfficeAddress" placeholder="Enter office address" required>
+    </div>
+
+    <!-- Residential Address -->
+    <div class="mb-3">
+      <label for="fatherResidentialAddress" class="form-label">Residential Address</label>
+      <input type="text" class="form-control rounded-pill" name="fatherResidentialAddress" id="fatherResidentialAddress" placeholder="Enter residential address" required>
+    </div>
+
+    <!-- Phone Numbers -->
+    <div class="mb-3">
+      <label for="fatherPhone" class="form-label">Phone Numbers</label>
+      <input type="text" class="form-control rounded-pill" name="fatherPhone" id="fatherPhone" placeholder="Enter phone number(s)" required>
+    </div>
+  </div>
+
+  <!-- Mother's Information -->
+  <div class="border rounded p-3">
+
+    <!-- Name of Mother -->
+    <div class="mb-3">
+      <label for="motherName" class="form-label">Name of Mother</label>
+      <input type="text" class="form-control rounded-pill" name="motherName" id="motherName" placeholder="Enter mother's name" required>
+    </div>
+
+    <!-- Office Address -->
+    <div class="mb-3">
+      <label for="motherOfficeAddress" class="form-label">Office Address</label>
+      <input type="text" class="form-control rounded-pill" name="motherOfficeAddress" id="motherOfficeAddress" placeholder="Enter office address" required>
+    </div>
+
+    <!-- Residential Address -->
+    <div class="mb-3">
+      <label for="motherResidentialAddress" class="form-label">Residential Address</label>
+      <input type="text" class="form-control rounded-pill" name="motherResidentialAddress" id="motherResidentialAddress" placeholder="Enter residential address" required>
+    </div>
+
+    <!-- Phone Numbers -->
+    <div class="mb-3">
+      <label for="motherPhone" class="form-label">Phone Numbers</label>
+      <input type="text" class="form-control rounded-pill" name="motherPhone" id="motherPhone" placeholder="Enter phone number(s)" required>
+    </div>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="d-flex justify-content-between mt-4">
+    <button type="button" class="btn btn-secondary prev-btn rounded-pill">Previous</button>
+    <button type="button" class="btn btn-success next-btn rounded-pill">Next</button>
+  </div>
+</div>
+
+<div class="form-step">
+  <h4 class="text-center"> Declaration</h4>
+
+  <!-- Declaration Statement -->
+  <div class="mb-3">
+    <p>
+      I, <input type="text" id="declarationName" name="declarationName" class="form-control d-inline-block w-auto rounded-pill" placeholder="Enter your name" required>, 
+      the parent of the applicant, hereby declare that all the information provided in this form are accurate and true.
+    </p>
+  </div>
+
+<!-- Parent's Signature -->
+<div class="mb-3">
+  <label for="parentSignature" class="form-label">Signature</label>
+  <input type="file" accept="image/*" class="form-control rounded-pill" id="parentSignature" name="parentSignature" required>
+  <img id="signaturePreview" src="https://via.placeholder.com/150" alt="Signature Preview" class="img-fluid mt-2" style="max-width: 150px; display: none;">
+</div>
+
+
+
+
+
+ <!-- Navigation Buttons -->
+ <div class="d-flex justify-content-between">
+  <button type="button" class="btn btn-secondary prev-btn rounded-pill">Previous</button>
+  <button type="button" class="btn btn-success next-btn rounded-pill">Preview</button>
+</div>
+</div>
+
+    
+            <!-- Step 3: Review and Submit -->
+            <div class="form-step">
+              <h4 class="text-center">Review Your Details</h4>
+              <p class="text-muted text-center">Please review the information you provided before submitting.</p>
+              <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary prev-btn rounded-pill">Previous</button>
+                <button type="submit" class="btn btn-success rounded-pill">Submit</button>
+              </div>
+            </div>
+          </form>
+           
         </div>
     </section>
     
@@ -194,16 +510,15 @@
     <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  
-    <!-- Main JS File -->
-    <script src="assets/js/main.js"></script>
-    <script type="module">
-     // Import Firebase modules
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
   import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
-  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, arrayUnion, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-  // Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyDKHZ1viqinUqJcs4He9QGnq2Ld82jSt-M",
     authDomain: "juli-tola.firebaseapp.com",
@@ -213,51 +528,258 @@
     appId: "1:452807393853:web:2c58c3ca257ea605f6e054",
     measurementId: "G-FVNPXHKQLJ"
   };
-  
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const storage = getStorage(app);
-  
-  
 
-// Upload Form Submission
-document.getElementById("uploadForm").onsubmit = async function(e) {
-    e.preventDefault();
-    const fileInput = document.getElementById('formFile');
-    const file = fileInput.files[0];
-    const statusMessage = document.getElementById('statusMessage');
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app);
+  const db = getFirestore(app);
 
-    if (file) {
-        const storageRef = ref(storage, `application_forms/${file.name}`);
-        try {
-            await uploadBytes(storageRef, file);
-            const downloadURL = await getDownloadURL(storageRef);
+  let formData = {};
+  let currentStep = 1;
+  const totalSteps = 5;
 
-            // Display success message
-            statusMessage.className = "alert alert-success";
-            statusMessage.innerHTML = "Form uploaded successfully! You can view it below.";
-            statusMessage.style.display = "block";
+  function showStep(step) {
+    document.querySelectorAll('.form-step').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.form-step')[step - 1].style.display = 'block';
+  }
+  document.getElementById('parentSignature').addEventListener('change', event => {
+  const file = event.target.files[0];
+  const reader = new FileReader();
 
-            // Set the iframe src to the uploaded file URL and show the iframe
-            const formViewer = document.getElementById('formViewer');
-            const iframe = document.getElementById('uploadedFormIframe');
-            iframe.src = downloadURL;
-            formViewer.style.display = "block"; // Display the viewer
+  if (file) {
+    reader.onload = () => {
+      const signaturePreview = document.getElementById('signaturePreview');
+      signaturePreview.src = reader.result;
+      signaturePreview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+});
 
-        } catch (error) {
-            statusMessage.className = "alert alert-danger";
-            statusMessage.innerHTML = `Error uploading form: ${error.message}`;
-            statusMessage.style.display = "block";
+
+  document.addEventListener('DOMContentLoaded', () => {
+    showStep(1);
+
+    document.querySelectorAll('.next-btn').forEach(button => {
+      button.addEventListener('click', function () {
+        if (validateStep(currentStep)) {
+          if (this.textContent === 'Preview') {
+            generatePreview();
+            currentStep = totalSteps;
+          } else {
+            currentStep++;
+          }
+          showStep(currentStep);
         }
-    } else {
-        statusMessage.className = "alert alert-warning";
-        statusMessage.innerHTML = "Please select a file to upload.";
-        statusMessage.style.display = "block";
-    }
-};
+      });
+    });
 
+    document.querySelectorAll('.prev-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        currentStep--;
+        showStep(currentStep);
+      });
+    });
+
+    document.getElementById('passport').addEventListener('change', event => {
+      const reader = new FileReader();
+      reader.onload = () => document.getElementById('passportPreview').src = reader.result;
+      reader.readAsDataURL(event.target.files[0]);
+    });
+
+    document.getElementById('applicationForm').addEventListener('submit', handleSubmit);
+  });
+
+  function validateStep(step) {
+    const currentStepElement = document.querySelectorAll('.form-step')[step - 1];
+    const inputs = currentStepElement.querySelectorAll('input, select, textarea');
+    let isValid = true;
+
+    inputs.forEach(input => {
+      if (input.hasAttribute('required') && !input.value.trim()) {
+        isValid = false;
+        input.classList.add('is-invalid');
+        if (!input.nextElementSibling?.classList.contains('invalid-feedback')) {
+          const errorDiv = document.createElement('div');
+          errorDiv.className = 'invalid-feedback';
+          errorDiv.textContent = 'This field is required';
+          input.parentNode.appendChild(errorDiv);
+        }
+      } else {
+        input.classList.remove('is-invalid');
+        const errorDiv = input.nextElementSibling;
+        if (errorDiv?.classList.contains('invalid-feedback')) errorDiv.remove();
+      }
+    });
+
+    return isValid;
+  }
+
+  function generatePreview() {
+    const formElements = document.getElementById('applicationForm').elements;
+    for (let element of formElements) {
+      if (element.id) {
+        formData[element.id] = element.value;
+      }
+    }
+    const signatureImageSrc = document.getElementById('signaturePreview').src;
+
+  // Create preview HTML
+
+  
+  const previewHTML = `
+    <div class="preview-container p-4">
+      <h4 class="text-center mb-4">Application Preview</h4>
+      
+      <!-- Personal Details -->
+      <div class="section mb-4">
+        <h5>Personal Details</h5>
+        <div class="row">
+          <div class="col-md-4">
+            <img src="${document.getElementById('passportPreview').src}" 
+                 alt="Passport Preview" 
+                 class="img-fluid rounded mb-2" 
+                 style="max-width: 150px">
+          </div>
+          <div class="col-md-8">
+            <p><strong>Name:</strong> ${formData.applicantName || ''}</p>
+            <p><strong>Date of Birth:</strong> ${formData.dob || ''}</p>
+            <p><strong>Gender:</strong> ${formData.gender || ''}</p>
+            <p><strong>Religion:</strong> ${formData.religion || ''}</p>
+            <p><strong>Nationality:</strong> ${formData.nationality || ''}</p>
+          </div>
+           <div class="col-md-6">
+            <p><strong>State:</strong> ${formData.state || ''}</p>
+            <p><strong>LGA:</strong> ${formData.lga || ''}</p>
+            <p><strong>Home Town:</strong> ${formData.homeTown || ''}</p>
+            <p><strong>Present Class:</strong> ${formData.presentClass || ''}</p>
+            <p><strong>Name of Last School Attended:</strong> ${formData.lastSchool || ''}</p>
+            <p><strong>Class To Which Admission Is Being Sought:</strong> ${formData.admissionClass || ''}</p>
+
+          </div>
+        </div>
+      </div>
+      
+      <!-- Medical Information -->
+      <div class="section mb-4">
+        <h5>Medical Information</h5>
+        <p><strong>Allergies:</strong> ${formData.allergies || ''}</p>
+        <p><strong>Allergy List:</strong> ${formData.allergyList || ''}</p>
+        <p><strong>Medications:</strong> ${formData.medications || ''}</p>
+        <p><strong>Immunization Status:</strong> ${formData.immunization || ''}</p>
+        <p><strong>Special Needs:</strong> ${formData.specialNeeds || ''}</p>
+      </div>
+      
+      <!-- Parents Information -->
+      <div class="section mb-4">
+        <h5>Parents Information</h5>
+        <div class="father-info mb-3">
+          <h6>Father's Details</h6>
+          <p><strong>Name:</strong> ${formData.fatherName || ''}</p>
+          <p><strong>Office Address:</strong> ${formData.fatherOfficeAddress || ''}</p>
+          <p><strong>Residential Address:</strong> ${formData.fatherResidentialAddress || ''}</p>
+          <p><strong>Phone:</strong> ${formData.fatherPhone || ''}</p>
+        </div>
+        <div class="mother-info">
+          <h6>Mother's Details</h6>
+          <p><strong>Name:</strong> ${formData.motherName || ''}</p>
+          <p><strong>Office Address:</strong> ${formData.motherOfficeAddress || ''}</p>
+          <p><strong>Residential Address:</strong> ${formData.motherResidentialAddress || ''}</p>
+          <p><strong>Phone:</strong> ${formData.motherPhone || ''}</p>
+        </div>
+      </div>
+    </div>
+
+      <!-- Declaration Section -->
+      <div class="section mb-4">
+        <h5>Declaration</h5>
+        <p>I, <strong>${formData.declarationName || ''}</strong>, the parent of the applicant, 
+           hereby declare that all the information provided in this form are accurate and true.</p>
+ <p><strong>Parent's Signature:</strong></p>
+        <img src="${signatureImageSrc}" alt="Parent's Signature" class="img-fluid rounded" style="max-width: 150px;">
+      </div>
+
+    
+    </div>
+
+
+  `;
+  
+  // Insert preview into the last step
+  const previewStep = document.querySelectorAll('.form-step')[totalSteps - 1];
+  previewStep.innerHTML = previewHTML + `
+    <div class="d-flex justify-content-between mt-4">
+      <button type="button" class="btn btn-secondary prev-btn rounded-pill">Previous</button>
+      <button type="submit" class="btn btn-success rounded-pill">Submit Application</button>
+    </div>
+  `;
+
+    previewStep.querySelector('.prev-btn').addEventListener('click', () => {
+      currentStep--;
+      showStep(currentStep);
+    });
+  }
+  async function handleSubmit(e) {
+  e.preventDefault();
+
+  try {
+    const passportFile = document.getElementById('passport').files[0];
+    const signatureFile = document.getElementById('parentSignature').files[0];
+
+    let passportUrl = '';
+    let signatureUrl = '';
+
+    if (passportFile) {
+      const passportRef = ref(storage, `passports/${Date.now()}_${passportFile.name}`);
+      await uploadBytes(passportRef, passportFile);
+      passportUrl = await getDownloadURL(passportRef);
+    }
+
+    if (signatureFile) {
+      const signatureRef = ref(storage, `signatures/${Date.now()}_${signatureFile.name}`);
+      await uploadBytes(signatureRef, signatureFile);
+      signatureUrl = await getDownloadURL(signatureRef);
+    }
+
+    const finalFormData = { 
+      ...formData, 
+      passportUrl, 
+      signatureUrl, 
+      submittedAt: new Date() 
+    };
+
+    await addDoc(collection(db, 'applications'), finalFormData);
+
+    Swal.fire({
+      title: 'Success!',
+      text: 'Your application has been submitted successfully',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    }).then(result => {
+      if (result.isConfirmed) {
+        document.getElementById('applicationForm').reset();
+        document.getElementById('passportPreview').src = 'https://via.placeholder.com/150';
+        document.getElementById('signaturePreview').src = 'https://via.placeholder.com/150';
+        document.getElementById('signaturePreview').style.display = 'none';
+        currentStep = 1;
+        showStep(1);
+      }
+    });
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    Swal.fire({
+      title: 'Error!',
+      text: 'There was an error submitting your application',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    });
+  }
+}
+
+
+</script>
+ <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
  
- </script>
   
   </body>
   

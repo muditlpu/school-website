@@ -5,31 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Gallery & Newsletter</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link
+  href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+  rel="stylesheet"
+/>
  <!-- Favicons -->
  <link href="assets/img/book.png" rel="icon">
  <link href="assets/img/book.png" rel="apple-touch-icon">
   <style>
-    body {
+    .edit {
       padding: 20px;
     }
 
-    .form-label {
+    .edit .form-label {
       font-weight: bold;
     }
 
-    #gallery-preview .gallery-item {
+    .edit  #gallery-preview .gallery-item {
       margin-bottom: 20px;
       text-align: center;
     }
 
-    #gallery-preview img {
+    .edit   #gallery-preview img {
       max-width: 100%;
       height: auto;
       border: 2px solid #28a745;
       border-radius: 5px;
     }
 
-    .delete-button {
+    .edit .delete-button {
       margin-top: 10px;
       color: white;
       background-color: #dc3545;
@@ -40,47 +44,47 @@
       transition: background-color 0.3s ease;
     }
 
-    .delete-button:hover {
+    .edit .delete-button:hover {
       background-color: #c82333;
     }
 
-    #message {
+    .edit   #message {
       margin-top: 10px;
       font-weight: bold;
     }
 
     /* Custom Styles for Tab Navigation */
-    .nav-tabs .nav-link {
+    .edit   .nav-tabs .nav-link {
       color: #28a745;
     }
 
-    .nav-tabs .nav-link.active {
+    .edit  .nav-tabs .nav-link.active {
       background-color: #28a745;
       color: white;
     }
 
-    .back-to-site {
+   .edit .back-to-site {
       text-align: center;
       margin-top: 20px;
     }
 
-    .back-to-site a {
+  .edit  .back-to-site a {
       color: #28a745;
       font-weight: bold;
       text-decoration: none;
     }
 
-    .back-to-site a:hover {
+ .edit   .back-to-site a:hover {
       text-decoration: underline;
     }
 
-    #highlights ul {
+ .edit   #highlights ul {
       padding-left: 20px;
     }
-    #highlights ul li {
+  .edit  #highlights ul li {
       list-style-type: disc;
     }
-    .newsletter-card {
+  .edit  .newsletter-card {
       padding: 15px;
       border: 1px solid #ddd;
       border-radius: 8px;
@@ -88,19 +92,19 @@
       background-color: #f9f9f9;
       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
-    .newsletter-card h5 {
+  .edit  .newsletter-card h5 {
       margin-bottom: 10px;
       font-weight: bold;
     }
-    .newsletter-card p, .newsletter-card ul {
+  .edit  .newsletter-card p, .edit .newsletter-card ul {
       margin-bottom: 10px;
     }
-    .class-list {
+    .edit  .class-list {
             list-style: none;
             padding: 0;
         }
 
-        .class-list li {
+      .edit  .class-list li {
             background-color: #e9ecef;
             padding: 15px;
             margin-bottom: 10px;
@@ -108,7 +112,7 @@
             position: relative;
         }
 
-        .class-list li button {
+      .edit  .class-list li button {
             position: absolute;
             right: 10px;
             top: 10px;
@@ -116,30 +120,30 @@
             padding: 5px 10px;
         }
 
-        .student-list {
+      .edit  .student-list {
             list-style: none;
             padding: 0;
         }
 
-        .student-list li {
+      .edit  .student-list li {
             margin-bottom: 10px;
             position: relative;
         }
 
-        .student-list li img {
+       .edit .student-list li img {
             width: 100px;
             height: 100px;
             vertical-align: middle;
         }
 
-        .student-list li button {
+      .edit  .student-list li button {
             position: absolute;
             right: 10px;
             top: 0;
             background-color: #dc3545;
             padding: 5px 10px;
         }
-        .class-card {
+      .edit  .class-card {
   background-color: #fff;
   padding: 20px;
   margin-bottom: 20px;
@@ -148,28 +152,28 @@
   transition: transform 0.2s ease;
 }
 
-.class-card:hover {
+    .class-card:hover {
   transform: translateY(-5px);
 }
 
-.class-card h3 {
+   .class-card h3 {
   font-size: 1.5rem;
   margin-bottom: 10px;
   color: #333;
 }
 
-.class-card ul {
+   .class-card ul {
   list-style-type: none;
   padding: 0;
 }
 
-.student-list {
+.edit  .student-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: 15px;
 }
 
-.student-item {
+ .edit  .student-item {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -179,7 +183,7 @@
   border-radius: 6px;
 }
 
-.student-img {
+ .edit  .student-img {
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -187,17 +191,17 @@
   border: 3px solid #ddd;
 }
 
-.student-name {
+ .edit  .student-name {
   font-size: 1rem;
   margin-top: 10px;
   color: #333;
 }
-.class-name {
+ .edit  .class-name {
   font-size: 1.5rem;
   color: #333;
 }
 
-button {
+  button {
   background-color: #d9534f;
   color: white;
   padding: 8px 12px;
@@ -209,56 +213,70 @@ button {
   transition: background-color 0.3s ease;
 }
 
-.class-header{
+  .edit .class-header{
     margin-bottom: 50px;
 }
-button:hover {
+  button:hover {
   background-color: #c9302c;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .class-card {
+   .edit  .class-card {
     padding: 15px;
   }
 
-  .class-card h3 {
+   .edit  .class-card h3 {
     font-size: 1.2rem;
   }
 
-  .student-list {
+   .edit  .student-list {
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   }
 
-  .student-img {
+   .edit  .student-img {
     width: 60px;
     height: 60px;
   }
 
-  .student-name {
+   .edit  .student-name {
     font-size: 0.9rem;
   }
 }
 
- /* Modal styling */
- .modal-iframe {
-      width: 100%;
-      height: 500px;
-      border: none;
-    }
+  .edit .application-card {
+        transition: all 0.3s ease;
+      }
+       .edit  .application-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+       .edit  .badge-status {
+        font-size: 0.9em;
+        padding: 8px 12px;
+      }
+       .edit  .actions-bar {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+      }
 
-  .application  .card-header, .btn-primary {
-      background-color: #4caf50; /* Primary green color */
-      color: #fff;
-    }
-    .application .btn-container {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
+      /* Mobile-specific style for search button */
+      @media (max-width: 576px) {
+      .edit     .search-btn {
+          width: 100%; /* Ensure the search button takes full width on mobile */
+          font-size: 0.9rem; /* Make the button smaller on mobile */
+        }
+      }
+  
+  .teacher     .card, .member { margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+  .teacher     .member .pic img { width: 100%; height: auto; border-radius: 10px; }
+  .teacher    .member-info { padding: 15px; text-align: center; }
+  .teacher    .social a { margin: 0 10px; color: #333; }
+  .teacher    .social a:hover { color: #007bff; }
+  .teacher    .btn-danger { margin-top: 10px; }
   </style>
 </head>
-<body>
+<body class="edit">
 
 <!-- Tab navigation for Gallery and Newsletter Editors -->
 <ul class="nav nav-tabs" id="editorTab" role="tablist">
@@ -270,6 +288,9 @@ button:hover {
   </li>
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="alumni-tab" data-bs-toggle="tab" data-bs-target="#alumni-editor" type="button" role="tab" aria-controls="alumni-editor" aria-selected="false">Alumni Editor</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="teacher-tab" data-bs-toggle="tab" data-bs-target="#teacher-editor" type="button" role="tab" aria-controls="teacher-editor" aria-selected="false">Teachers Editor</button>
   </li>
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="application_tab" data-bs-toggle="tab" data-bs-target="#application-form" type="button" role="tab" aria-controls="application-form" aria-selected="false">Applications</button>
@@ -392,6 +413,61 @@ button:hover {
 
   </div>
 
+  <!--Teacher Editor-->
+  <div class="tab-pane fade" id="teacher-editor" role="tabpanel" aria-labelledby="teacher-tab">
+    <div class="container mt-4 teacher">
+      <h2 class="text-success">Edit Teacher</h2>
+
+      <!-- Add New Teacher Form -->
+    <div class="card mb-3 ">
+      <div class="card-body">
+          <h5 class="card-title">Add New Teacher</h5>
+          <form id="teacherForm">
+              <div class="form-group mb-2">
+                  <label for="name">Teacher's Name</label>
+                  <input type="text" class="form-control" id="name" placeholder="Enter teacher's name" required>
+              </div>
+              <div class="form-group  mb-2">
+                  <label for="position">Position</label>
+                  <input type="text" class="form-control" id="position" placeholder="Enter teacher's position" required>
+              </div>
+              <div class="form-group  mb-2">
+                  <label for="profilePic">Profile Picture</label>
+                  <input type="file" class="form-control" id="profilePic" accept="image/*" required>
+              </div>
+              <!-- Social Media Links -->
+              <div class="form-group  mb-2">
+                  <label for="twitter">Twitter URL</label>
+                  <input type="url" class="form-control" id="twitter" placeholder="Twitter profile link">
+              </div>
+              <div class="form-group  mb-2">
+                  <label for="facebook">Facebook URL</label>
+                  <input type="url" class="form-control" id="facebook" placeholder="Facebook profile link">
+              </div>
+              <div class="form-group  mb-2">
+                  <label for="instagram">Instagram URL</label>
+                  <input type="url" class="form-control" id="instagram" placeholder="Instagram profile link">
+              </div>
+              <div class="form-group  mb-2">
+                  <label for="linkedin">LinkedIn URL</label>
+                  <input type="url" class="form-control" id="linkedin" placeholder="LinkedIn profile link">
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Add Teacher</button>
+          </form>
+      </div>
+  </div>
+
+      <!-- Section for Displaying Current Classes -->
+      <div class="current-classes">
+          <h2 class="text-success mb-2">Current Teachers</h2>
+          <div id="teacherList" class="row">
+
+          </div>
+      </div>
+  </div>
+
+  </div>
+
   <!-- Application Form -->
   <div class="tab-pane fade" id="application-form" role="tabpanel" aria-labelledby="application_tab">
 
@@ -399,25 +475,42 @@ button:hover {
       <h2 class="text-success mb-4">View Applications</h2>
 
       <!-- Application Forms List -->
-      <div id="formsList" class="row gy-3">
-        <!-- Dynamic content will be loaded here -->
+      <div class="card shadow-sm ">
+
+      <div class="card-body">
+        <div id="applicationsList" class="row g-4">
+          <!-- Applications will be loaded here -->
+        </div>
+      </div>
       </div>
     </div>
-    
-<!-- Modal for Previewing Forms -->
-<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="previewModalLabel">Form Preview</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <iframe id="previewIframe" class="modal-iframe"></iframe>
+  <!-- Application Details Modal -->
+  <div class="modal fade" id="applicationModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Application Details</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+        <div class="modal-body" id="applicationDetails">
+          <!-- Application details will be loaded here -->
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
       </div>
 </div>
 
@@ -434,7 +527,7 @@ button:hover {
   // Import Firebase modules
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
   import { getStorage, ref, uploadBytes, deleteObject, listAll, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
-  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, arrayUnion, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, onSnapshot, updateDoc, arrayUnion, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
   // Firebase configuration
   const firebaseConfig = {
@@ -856,90 +949,348 @@ window.deleteStudent = async function(className, studentIndex) {
 
         window.onload = loadClasses;
 
+ // ----------------------------------------------
+  // Teacher Functions
+  // ----------------------------------------------
 
+
+         // Load teachers
+    function loadTeachers() {
+        const teacherList = document.getElementById("teacherList");
+        onSnapshot(collection(db, "teachers"), (snapshot) => {
+            teacherList.innerHTML = "";
+            snapshot.forEach((doc) => {
+                const teacher = doc.data();
+                const teacherCard = `
+                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="member">
+                            <div class="pic">
+                                <img src="${teacher.profilePic}" class="img-fluid" alt="${teacher.name}">
+                            </div>
+                            <div class="member-info">
+                                <h4>${teacher.name}</h4>
+                                <span>${teacher.position}</span>
+                                <div class="social">
+                                    ${teacher.twitter ? `<a href="${teacher.twitter}" target="_blank"><i class="bi bi-twitter"></i></a>` : ""}
+                                    ${teacher.facebook ? `<a href="${teacher.facebook}" target="_blank"><i class="bi bi-facebook"></i></a>` : ""}
+                                    ${teacher.instagram ? `<a href="${teacher.instagram}" target="_blank"><i class="bi bi-instagram"></i></a>` : ""}
+                                    ${teacher.linkedin ? `<a href="${teacher.linkedin}" target="_blank"><i class="bi bi-linkedin"></i></a>` : ""}
+                                </div>
+                                <button onclick="deleteTeacher('${doc.id}', '${teacher.profilePic}')" class="btn btn-danger mt-2">Delete</button>
+                            </div>
+                        </div>
+                    </div>`;
+                teacherList.insertAdjacentHTML('beforeend', teacherCard);
+            });
+        });
+    }
+
+    // Add teacher
+    document.getElementById("teacherForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const name = document.getElementById("name").value;
+        const position = document.getElementById("position").value;
+        const profilePicFile = document.getElementById("profilePic").files[0];
+        const twitter = document.getElementById("twitter").value;
+        const facebook = document.getElementById("facebook").value;
+        const instagram = document.getElementById("instagram").value;
+        const linkedin = document.getElementById("linkedin").value;
+
+        if (!profilePicFile) return;
+
+        const storageRefPic = storageRef(storage, `teacherPics/${profilePicFile.name}`);
+        const snapshot = await uploadBytes(storageRefPic, profilePicFile);
+        const profilePicURL = await getDownloadURL(snapshot.ref);
+
+        await addDoc(collection(db, "teachers"), {
+            name,
+            position,
+            profilePic: profilePicURL,
+            twitter: twitter || null,
+            facebook: facebook || null,
+            instagram: instagram || null,
+            linkedin: linkedin || null
+        });
+
+        Swal.fire("Added!", "Teacher has been added successfully.", "success");
+        document.getElementById("teacherForm").reset();
+    });
+
+    // Delete teacher
+    window.deleteTeacher = async function (id, profilePicURL) {
+        const confirmDelete = await Swal.fire({
+            title: "Are you sure?",
+            text: "This will permanently delete the teacher.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        });
+        if (confirmDelete.isConfirmed) {
+            const picRef = storageRef(storage, profilePicURL);
+            await deleteObject(picRef);
+            await deleteDoc(doc(db, "teachers", id));
+            Swal.fire("Deleted!", "Teacher has been deleted.", "success");
+        }
+    };
+
+    loadTeachers();
   // ----------------------------------------------
   // Application Functions
   // ----------------------------------------------
+  let applications = [];
 
-  // Load and Display Forms
-  async function loadForms() {
-    const formsList = document.getElementById("formsList");
-    formsList.innerHTML = ""; // Clear the list
-
-    const storageRef = ref(storage, "application_forms/");
-    try {
-      const formsSnapshot = await listAll(storageRef);
-
-      if (formsSnapshot.items.length === 0) {
-        formsList.innerHTML = `<div class="col-12"><p class="text-center text-muted">No forms available.</p></div>`;
-      }
-
-      for (const itemRef of formsSnapshot.items) {
-        const downloadURL = await getDownloadURL(itemRef);
-        const formName = itemRef.name;
-
-        // Card for each form
-        const formCard = document.createElement("div");
-        formCard.className = "col-md-4";
-        formCard.innerHTML = `
-          <div class="card shadow-sm">
-            <div class="card-header">${formName}</div>
-            <div class="card-body text-center">
-              <div class="btn-container">
-                <button class="btn btn-success" onclick="openPreview('${downloadURL}')">Preview</button>
-                <button class="btn btn-danger" onclick="confirmDelete('${formName}')">Delete</button>
-              </div>
-            </div>
-          </div>
-        `;
-        formsList.appendChild(formCard);
-      }
-    } catch (error) {
-      console.error("Error loading forms:", error);
-      formsList.innerHTML = `<div class="col-12"><p class="text-center text-danger">Failed to load forms.</p></div>`;
-    }
-  }
-
-  // Delete a form
-  async function deleteForm(formName) {
-    try {
-      const fileRef = ref(storage, `application_forms/${formName}`);
-      await deleteObject(fileRef);
-
-      Swal.fire("Deleted!", "The form has been deleted.", "success");
-      loadForms(); // Reload the forms list
-    } catch (error) {
-      Swal.fire("Error", `Failed to delete form: ${error.message}`, "error");
-    }
-  }
-
-  // Confirm Delete with SweetAlert
-  window.confirmDelete = function(formName) {
+async function loadApplications() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "applications"));
+    applications = [];
+    querySnapshot.forEach((doc) => {
+      applications.push({ id: doc.id, ...doc.data() });
+    });
+    renderApplications();
+  } catch (error) {
+    console.error("Error loading applications:", error);
     Swal.fire({
-      title: "Are you sure?",
-      text: "This action cannot be undone.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#4caf50",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteForm(formName);
-      }
+      title: "Error!",
+      text: "Failed to load applications",
+      icon: "error",
     });
   }
+}
 
-  // Open Preview in Modal
-  window.openPreview = function(downloadURL) {
-    const previewIframe = document.getElementById("previewIframe");
-    previewIframe.src = downloadURL;
-    const previewModal = new bootstrap.Modal(document.getElementById("previewModal"));
-    previewModal.show();
+function renderApplications() {
+  const container = document.getElementById("applicationsList");
+  container.innerHTML = "";
+
+  applications.forEach((app) => {
+    const card = document.createElement("div");
+    card.className = "col-md-6 col-lg-4";
+    card.innerHTML = `
+              <div class="card application-card h-100">
+                  <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-start mb-3">
+                          <h5 class="card-title">${
+                            app.applicantName || "No Name"
+                          }</h5>
+                        
+                      </div>
+                      <p class="card-text">
+                          <strong>Class:</strong> ${
+                            app.admissionClass || "Not specified"
+                          }<br>
+                          <strong>Submitted:</strong> ${formatDate(
+                            app.submittedAt
+                          )}
+                      </p>
+                      <div class="d-flex justify-content-between mt-3">
+  <button class="btn btn-success btn-sm d-flex align-items-center justify-content-center" style="width: 100px;" onclick="viewApplication('${app.id}')">
+    <i class="fas fa-eye me-2"></i>View
+  </button>
+  <button class="btn btn-danger btn-sm d-flex align-items-center justify-content-center" style="width: 100px;" onclick="deleteApplication('${app.id}')">
+    <i class="fas fa-trash me-2"></i>Delete
+  </button>
+</div>
+
+                  </div>
+              </div>
+          `;
+    container.appendChild(card);
+  });
+}
+
+function formatDate(timestamp) {
+  if (!timestamp) return "Unknown";
+  const date = new Date(timestamp.seconds * 1000);
+  return date.toLocaleDateString();
+}
+
+function getStatusColor(status) {
+  switch (status) {
+    case "Approved":
+      return "success";
+    case "Rejected":
+      return "danger";
+    default:
+      return "warning";
   }
+}
 
-  // Initial Load
-  loadForms();
+window.viewApplication = (id) => {
+  const app = applications.find((a) => a.id === id);
+  if (!app) return;
+
+  const modalBody = document.getElementById("applicationDetails");
+  modalBody.innerHTML = `
+          <div class="container-fluid">
+              <div class="row">
+                  <div class="col-md-4">
+                      <img src="${
+                        app.passportUrl ||
+                        "https://via.placeholder.com/150"
+                      }" 
+                           alt="Passport" 
+                           class="img-fluid rounded mb-3">
+                  </div>
+                  <div class="col-md-8">
+                      <h4>${app.applicantName}</h4>
+                      <p class="text-muted">Application ID: ${app.id}</p>
+                  </div>
+              </div>
+              <hr>
+              <div class="row">
+                  <div class="col-md-8">
+<h2><strong>Personal Details</strong></h2> 
+      <p><strong>Name:</strong> ${app.applicantName || ""}</p>
+      <p><strong>Date of Birth:</strong> ${app.dob || ""}</p>
+      <p><strong>Gender:</strong> ${app.gender || ""}</p>
+      <p><strong>Religion:</strong> ${app.religion || ""}</p>
+      <p><strong>Nationality:</strong> ${app.nationality || ""}</p>
+    </div>
+     <div class="col-md-6">
+      <p><strong>State:</strong> ${app.state || ""}</p>
+      <p><strong>LGA:</strong> ${app.lga || ""}</p>
+      <p><strong>Home Town:</strong> ${app.homeTown || ""}</p>
+      <p><strong>Present Class:</strong> ${app.presentClass || ""}</p>
+      <p><strong>Name of Last School Attended:</strong> ${
+        app.lastSchool || ""
+      }</p>
+      <p><strong>Class To Which Admission Is Being Sought:</strong> ${
+        app.admissionClass || ""
+      }</p>
+
+              </div>
+
+          </div>
+
+           <div class="row">
+              <hr/>
+                  <div class="col-md-8">
+<h2><strong>Medical Information</strong></h2> 
+     <div class="section mb-4">
+  <h5>Medical Information</h5>
+  <p><strong>Allergies:</strong> ${app.allergies || "none"}</p>
+  <p><strong>Allergy List:</strong> ${app.allergyList || "none"}</p>
+  <p><strong>Medications:</strong> ${app.medications || "none"}</p>
+  <p><strong>Immunization Status:</strong> ${
+    app.immunization || "none"
+  }</p>
+  <p><strong>Special Needs:</strong> ${app.specialNeeds || "none"}</p>
+</div>
+              </div>
+
+          </div>
+
+           <div class="row">
+              <hr/>
+                  <div class="col-md-8">
+
+
+<h2><strong>Parents Information</strong></h2> 
+  <div class="father-info mb-3">
+    <h6 class="mt-2"><strong>Father's Details</strong></h6>
+    <p><strong>Name:</strong> ${app.fatherName || ""}</p>
+    <p><strong>Office Address:</strong> ${
+      app.fatherOfficeAddress || ""
+    }</p>
+    <p><strong>Residential Address:</strong> ${
+      app.fatherResidentialAddress || ""
+    }</p>
+    <p><strong>Phone:</strong> ${app.fatherPhone || ""}</p>
+  </div>
+  <div class="mother-info">
+    <h6 class="border-top mt-2"><strong>Mother's Details</strong></h6>
+    <p><strong>Name:</strong> ${app.motherName || ""}</p>
+    <p><strong>Office Address:</strong> ${
+      app.motherOfficeAddress || ""
+    }</p>
+    <p><strong>Residential Address:</strong> ${
+      app.motherResidentialAddress || ""
+    }</p>
+    <p><strong>Phone:</strong> ${app.motherPhone || ""}</p>
+  </div>
+
+
+</div>
+              </div>
+
+
+       <div class="row">
+              <hr/>
+                  <div class="col-md-8">
+
+
+<h2><strong>Declaration</strong></h2> 
+   <div class="section mb-4">
+  <p>I, <strong>${app.declarationName || ''}</strong>, the parent of the applicant, 
+     hereby declare that all the information provided in this form are accurate and true.</p>
+<div>
+  <strong>Parent's Signature:</strong><br>
+          ${app.signatureUrl 
+            ? `<img src="${app.signatureUrl}" alt="Parent's Signature" class="img-fluid mt-2" style="max-height: 150px;">`
+            : "No signature uploaded."}
+</div>
+</div>
+
+
+
+</div>
+              </div>
+              
+              
+
+
+          </div>
+
+          
+          </div>
+      `;
+
+  const modal = new bootstrap.Modal(
+    document.getElementById("applicationModal")
+  );
+  modal.show();
+};
+window.deleteApplication = async (id) => {
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    text: "Do you want to delete this application? This action cannot be undone.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, delete it!",
+    cancelButtonText: "No, cancel",
+  });
+
+  if (result.isConfirmed) {
+    try {
+      await deleteDoc(doc(db, "applications", id));
+      Swal.fire({
+        title: "Deleted!",
+        text: "The application has been deleted.",
+        icon: "success",
+      });
+      loadApplications(); // Reload the applications list
+    } catch (error) {
+      console.error("Error deleting application:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to delete the application.",
+        icon: "error",
+      });
+    }
+  } else {
+    Swal.fire({
+      title: "Cancelled",
+      text: "The application was not deleted.",
+      icon: "info",
+    });
+  }
+};
+
+// Initialize the app
+loadApplications();
 
 </script>
 

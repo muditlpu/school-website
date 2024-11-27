@@ -55,8 +55,28 @@
           <ul>
             <li><a href="index.html#hero" class="active">Home</a></li>
             <li><a href="index.html#about">About</a></li>
-            <li><a href="index.html#academics">Academics</a></li>
-              <li><a href="index.html#activities">Activities</a></li>
+            <li class="dropdown">
+              <a href="index#academics">
+                  <span>Academics</span>
+                  <!-- This is the small arrow icon beside "Academics." No changes are needed unless styling adjustments are required. -->
+                  <i class="bi bi-chevron-down toggle-dropdown"></i>
+              </a>
+              <!-- This is the dropdown menu under "Academics." To add a new option, insert a new <li> item here. -->
+              <ul>
+                  <!-- Alumni Link: This link directs users to the "Discover" section on the Alumni page. 
+                       To change the text "Alumni," edit it inside the <a> tag. -->
+                  <li><a href="Alumni.html#discover">Alumni</a></li>
+    
+                  <!-- Application Form Primary Link: This takes users to the primary school application form. 
+                       To change the link name, replace "Application Form Primary" with the desired text. -->
+                  <li><a href="ApplicationPri.html">Application Form Primary</a></li>
+    
+                  <!-- Application Form Secondary Link: This directs users to the secondary school application form. 
+                       Edit "Application Form Secondary" to change the displayed text. -->
+                  <li><a href="ApplicationSec.html">Application Form Secondary</a></li>
+              </ul>
+          </li>     
+                        <li><a href="index.html#activities">Activities</a></li>
               <li><a href="index.html#news">News</a></li>
             <li><a href="index.html#gallery">Gallery</a></li>
             <li class="dropdown"><a href="#discover"><span>Discover</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
